@@ -1,59 +1,63 @@
 <template>
-  <v-card>
-    <v-toolbar
-      color="cyan"
-      dark
-      flat
-    >
-      <v-app-bar-nav-icon />
-
-      <v-toolbar-title>Your Dashboard</v-toolbar-title>
-
+  <v-app>
+    <v-app-bar app color="primary" dark>
+      <v-toolbar-title>Hastane App</v-toolbar-title>
       <v-spacer />
-
+      <v-toolbar-items>
+        <v-btn text>
+          <nuxt-link to="/">
+            Ana Sayfa
+          </nuxt-link>
+        </v-btn>
+        <v-btn text>
+          <nuxt-link to="/department/departments">
+            Bölümler
+          </nuxt-link>
+        </v-btn>
+        <v-btn text>
+          <nuxt-link to="/services">
+            Hizmetler
+          </nuxt-link>
+        </v-btn>
+        <v-btn text>
+          <nuxt-link to="/contact">
+            İletişim
+          </nuxt-link>
+        </v-btn>
+      </v-toolbar-items>
       <v-btn icon>
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
-
       <v-btn icon>
         <v-icon>mdi-dots-vertical</v-icon>
       </v-btn>
+      <v-btn color="secondary" @click="logout">
+        Çıkış Yap
+      </v-btn>
+    </v-app-bar>
 
-      <template #extension>
-        <v-tabs
-          v-model="tab"
-          align-with-title
-        >
-          <v-tabs-slider color="yellow" />
-
-          <v-tab
-            v-for="item in items"
-            :key="item"
-          >
-            {{ item }}
-          </v-tab>
-        </v-tabs>
-      </template>
-    </v-toolbar>
-
-    <v-tabs-items v-model="tab">
-      <v-tab-item
-        v-for="item in items"
-        :key="item"
-      />
-    </v-tabs-items>
-  </v-card>
+    <v-main>
+      <nuxt />
+    </v-main>
+  </v-app>
 </template>
 
 <script>
 export default {
   data () {
-    return {
-      tab: null,
-      items: [
-        'Home', 'Bölümler', 'Randevularınız', 'Geçmiş Hasta Kayıtları', 'Geçmiş Randevular'
-      ]
+    return {}
+  },
+  methods: {
+    async logout () {
+      await this.$auth.logout()
+      this.$router.push('/login')
     }
   }
 }
 </script>
+
+<style scoped>
+.v-application--is-ltr .v-app-bar {
+  height: 64px;
+}
+</style>
