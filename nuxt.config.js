@@ -43,6 +43,11 @@ export default {
   build: {
   },
   auth: {
+    redirect: {
+      login: '/auth/login',
+      logout: '/',
+      home: '/'
+    },
     strategies: {
       local: {
         schema: 'local',

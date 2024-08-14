@@ -109,7 +109,7 @@
             </v-form>
           </v-card-text>
           <v-card-actions>
-            <nuxt-link to="/login">
+            <nuxt-link to="/auth/login">
               Giriş yap
             </nuxt-link>
           </v-card-actions>
@@ -157,7 +157,7 @@ export default {
           params: { role: this.form.role === 'Patient' ? 0 : 1 }
         })
         console.log('Registration successful:', response.data)
-        this.$router.push('/login')
+        this.$router.push('/auth/login')
       } catch (error) {
         console.error('Registration failed:', error.response.data)
       }

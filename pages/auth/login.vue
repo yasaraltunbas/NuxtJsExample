@@ -67,7 +67,7 @@ export default {
       }
     },
     goToRegister () {
-      this.$router.push('/register')
+      this.$router.push('/auth/register')
     }
   }
 }

@@ -1,37 +1,27 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
+    <v-app-bar app color="dark" dark>
       <v-toolbar-title>Hastane App</v-toolbar-title>
-      <v-spacer />
-      <v-toolbar-items>
-        <v-btn text>
-          <nuxt-link to="/">
-            Ana Sayfa
-          </nuxt-link>
-        </v-btn>
-        <v-btn text>
-          <nuxt-link to="/department/departments">
-            Bölümler
-          </nuxt-link>
-        </v-btn>
-        <v-btn text>
-          <nuxt-link to="/services">
-            Hizmetler
-          </nuxt-link>
-        </v-btn>
-        <v-btn text>
-          <nuxt-link to="/contact">
-            İletişim
-          </nuxt-link>
-        </v-btn>
+      <v-toolbar-items class="toolbar-items">
+        <nuxt-link to="/">
+          Ana Sayfa
+        </nuxt-link>
+        <nuxt-link to="/departments">
+          Bölümler
+        </nuxt-link>
+        <nuxt-link to="/appointment/getappointment">
+          Randevularım
+        </nuxt-link>
+        <nuxt-link to="/appointment/get-ex-appointment">
+          Geçmiş Randevularım
+        </nuxt-link>
+        <nuxt-link to="/profile" class="profile">
+          Profiliniz
+        </nuxt-link>
       </v-toolbar-items>
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn>
-      <v-btn color="secondary" @click="logout">
+      <v-spacer />
+
+      <v-btn color="grey" @click="logout">
         Çıkış Yap
       </v-btn>
     </v-app-bar>
@@ -50,14 +40,32 @@ export default {
   methods: {
     async logout () {
       await this.$auth.logout()
-      this.$router.push('/login')
+      this.$router.push('/auth/login')
     }
   }
 }
 </script>
 
 <style scoped>
-.v-application--is-ltr .v-app-bar {
-  height: 64px;
+.toolbar-items {
+  display: flex;
+  align-items: center;
+  color: white;
+  margin-right: 16px;
+  margin: 0 16px;
+}
+
+.toolbar-items a {
+  color: white; /* Linklerin rengi beyaz olarak ayarlandı */
+  margin-right: 16px; /* Linkler arasında boşluk bırakıldı */
+  text-decoration: none; /* Linklerin altı çizili olmaması sağlandı */
+}
+
+.toolbar-items a:hover {
+  text-decoration: underline; /* Linklerin üzerine gelindiğinde altı çizili olması sağlandı */
+}
+.profile {
+  margin-left: auto;
+  text-align: right;
 }
 </style>
