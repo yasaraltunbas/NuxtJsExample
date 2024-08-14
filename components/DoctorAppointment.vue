@@ -30,7 +30,7 @@
               <v-btn color="secondary" @click="addMedicalRecord(appointment.patient.id, appointment.id)">
                 İşlem Ekle
               </v-btn>
-              <v-btn color="error" @click="goToAddAdmission(appointment.patient.id)">
+              <v-btn color="error" @click="goToAddAdmission(appointment.patientId)">
                 Hasta İçin Yatış Ekleyin
               </v-btn>
             </v-list-item-action>
@@ -57,21 +57,28 @@ export default {
       required: true
     }
   },
+  data: function () {
+    return {
+      appointments: [],
+      patient: []
+    }
+  },
   methods: {
     viewDetails (patientId) {
-      this.$router.push({ path: '/getmedicalrecord', query: { patientId } })
+      this.$router.push({ path: '/medicalrecord/get-medicalrecord', query: { patientId } })
     },
     addMedicalRecord (patientId, appointmentId) {
-      this.$router.push({ path: '/addmedicalrecord', query: { patientId, appointmentId } })
+      this.$router.push({ path: '/medicalrecord/add-medicalrecord', query: { patientId, appointmentId } })
     },
     goToAddAdmission (patientId) {
       this.$router.push({
-        name: 'addadmission',
+        name: 'add-admission',
         query: { doctorId: this.doctorId, departmentId: this.departmentId, patientId }
       })
     }
   }
 }
+
 </script>
 
   <style scoped>

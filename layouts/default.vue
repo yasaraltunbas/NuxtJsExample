@@ -15,6 +15,9 @@
         <nuxt-link to="/appointment/get-ex-appointment">
           Geçmiş Randevularım
         </nuxt-link>
+        <nuxt-link to="/medicalrecord/get-ex-medicalrecord">
+          Geçmiş Muayenelerim
+        </nuxt-link>
         <nuxt-link to="/profile" class="profile">
           Profiliniz
         </nuxt-link>
@@ -34,14 +37,40 @@
 
 <script>
 export default {
+  name: 'DefaultLayout',
   data () {
-    return {}
+    return {
+      role: 'Patient'
+    }
   },
+  computed: {
+    isAuthPage () {
+      return this.$route.path === '/auth/login' || this.$route.path === '/auth/register'
+    }
+  },
+  created () {
+    this.fetchUserRole()
+      .then(() => {
+        this.fetchUserAppointments()
+      })
+  },
+
   methods: {
     async logout () {
       await this.$auth.logout()
       this.$router.push('/auth/login')
+    },
+    async fetchUserRole () {
+      try {
+        const response = await this.$axios.get('/auth/user')
+        const role = response.data.role
+        this.role = role
+        return role
+      } catch (error) {
+        console.error('Error fetching user role:', error)
+      }
     }
+
   }
 }
 </script>
