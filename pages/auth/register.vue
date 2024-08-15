@@ -125,6 +125,7 @@ export default {
   data () {
     return {
       form: {
+        role: 'Patient',
         email: '',
         password: '',
         firstName: '',

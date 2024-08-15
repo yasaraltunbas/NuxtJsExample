@@ -103,7 +103,7 @@ export default {
         console.log('Appointment created:', response.data)
 
         this.message = 'Randevu başarıyla oluşturuldu!'
-        this.$router.push('/getappointment')
+        this.$router.push('/appointment/getappointment')
       } catch (error) {
         this.message = 'Randevu oluşturulurken hata oluştu: ' + error.response.data.message
       }

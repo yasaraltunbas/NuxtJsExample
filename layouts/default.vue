@@ -1,30 +1,51 @@
 <template>
   <v-app>
-    <v-app-bar app color="dark" dark>
+    <v-app-bar v-if="!isAuthPage" app color="primary" dark>
       <v-toolbar-title>Hastane App</v-toolbar-title>
-      <v-toolbar-items class="toolbar-items">
-        <nuxt-link to="/">
+      <v-spacer />
+      <v-toolbar-items>
+        <v-btn text to="/">
+          <v-icon left>
+            mdi-home
+          </v-icon>
           Ana Sayfa
-        </nuxt-link>
-        <nuxt-link to="/departments">
+        </v-btn>
+        <v-btn v-if="userRole === 'Patient'" text to="/departments">
+          <v-icon left>
+            mdi-hospital-building
+          </v-icon>
           Bölümler
-        </nuxt-link>
-        <nuxt-link to="/appointment/getappointment">
+        </v-btn>
+        <v-btn text to="/appointment/getappointment">
+          <v-icon left>
+            mdi-calendar-check
+          </v-icon>
           Randevularım
-        </nuxt-link>
-        <nuxt-link to="/appointment/get-ex-appointment">
+        </v-btn>
+        <v-btn v-if="userRole === 'Patient'" text to="/appointment/get-ex-appointment">
+          <v-icon left>
+            mdi-calendar-clock
+          </v-icon>
           Geçmiş Randevularım
-        </nuxt-link>
-        <nuxt-link to="/medicalrecord/get-ex-medicalrecord">
+        </v-btn>
+        <v-btn v-if="userRole === 'Patient'" text to="/medicalrecord/get-ex-medicalrecord">
+          <v-icon left>
+            mdi-file-document-box
+          </v-icon>
           Geçmiş Muayenelerim
-        </nuxt-link>
-        <nuxt-link to="/profile" class="profile">
+        </v-btn>
+        <v-btn text to="/profile">
+          <v-icon left>
+            mdi-account
+          </v-icon>
           Profiliniz
-        </nuxt-link>
+        </v-btn>
       </v-toolbar-items>
       <v-spacer />
-
       <v-btn color="grey" @click="logout">
+        <v-icon left>
+          mdi-logout
+        </v-icon>
         Çıkış Yap
       </v-btn>
     </v-app-bar>
@@ -38,39 +59,19 @@
 <script>
 export default {
   name: 'DefaultLayout',
-  data () {
-    return {
-      role: 'Patient'
-    }
-  },
   computed: {
     isAuthPage () {
       return this.$route.path === '/auth/login' || this.$route.path === '/auth/register'
+    },
+    userRole () {
+      return this.$auth.user ? this.$auth.user.role : null
     }
   },
-  created () {
-    this.fetchUserRole()
-      .then(() => {
-        this.fetchUserAppointments()
-      })
-  },
-
   methods: {
     async logout () {
       await this.$auth.logout()
       this.$router.push('/auth/login')
-    },
-    async fetchUserRole () {
-      try {
-        const response = await this.$axios.get('/auth/user')
-        const role = response.data.role
-        this.role = role
-        return role
-      } catch (error) {
-        console.error('Error fetching user role:', error)
-      }
     }
-
   }
 }
 </script>
@@ -79,22 +80,9 @@ export default {
 .toolbar-items {
   display: flex;
   align-items: center;
-  color: white;
-  margin-right: 16px;
-  margin: 0 16px;
 }
 
-.toolbar-items a {
-  color: white; /* Linklerin rengi beyaz olarak ayarlandı */
-  margin-right: 16px; /* Linkler arasında boşluk bırakıldı */
-  text-decoration: none; /* Linklerin altı çizili olmaması sağlandı */
-}
-
-.toolbar-items a:hover {
-  text-decoration: underline; /* Linklerin üzerine gelindiğinde altı çizili olması sağlandı */
-}
 .profile {
   margin-left: auto;
-  text-align: right;
 }
 </style>

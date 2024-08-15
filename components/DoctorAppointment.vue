@@ -72,7 +72,7 @@ export default {
     },
     goToAddAdmission (patientId) {
       this.$router.push({
-        name: 'add-admission',
+        path: '/admission/add-admission',
         query: { doctorId: this.doctorId, departmentId: this.departmentId, patientId }
       })
     }
