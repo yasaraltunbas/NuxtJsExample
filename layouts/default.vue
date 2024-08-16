@@ -34,6 +34,18 @@
           </v-icon>
           Geçmiş Muayenelerim
         </v-btn>
+        <v-btn v-if="userRole === 'Doctor'" text to="/admission/get-admission-doctor">
+          <v-icon left>
+            mdi-calendar-clock
+          </v-icon>
+          Yatışta Olan Hastalarınız
+        </v-btn>
+        <v-btn v-if="userRole === 'Patient'" text to="/admission/get-admission-patient">
+          <v-icon left>
+            mdi-calendar-clock
+          </v-icon>
+          Yatış Bilgileriniz
+        </v-btn>
         <v-btn text to="/profile">
           <v-icon left>
             mdi-account
