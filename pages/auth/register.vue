@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <v-col cols="12" md="8">
+      <v-col cols="12" md="4">
         <v-card>
           <v-card-title>
             <span class="headline">Kayıt Ol</span>
@@ -103,9 +103,12 @@
                 type="number"
                 required
               />
-              <v-btn type="submit" color="primary" block>
-                Kayıt ol
-              </v-btn>
+              <v-col cols="8" />
+              <v-col>
+                <v-btn type="submit" color="primary" block>
+                  Kayıt ol
+                </v-btn>
+              </v-col>
             </v-form>
           </v-card-text>
           <v-card-actions>

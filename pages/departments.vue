@@ -1,36 +1,40 @@
 <template>
-  <v-simple-table height="530px">
-    <template #default>
-      <thead>
-        <tr>
-          <th class="text-left">
-            Bölüm
-          </th>
-          <th class="text-left">
-            Konum
-          </th>
-          <th class="text-left">
-            Ücret
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="item in departments"
-          :key="item.id"
-        >
-          <td>{{ item.departmentName }}</td>
-          <td>{{ item.location }}</td>
-          <td>{{ item.fee }}</td>
-          <td align="right">
-            <v-btn color="primary" class="btn" @click="makeAppointment(item)">
-              Randevu Al
-            </v-btn>
-          </td>
-        </tr>
-      </tbody>
-    </template>
-  </v-simple-table>
+  <v-container>
+    <v-col cols="12">
+      <v-simple-table height="530px">
+        <template #default>
+          <thead>
+            <tr>
+              <th class="text-left">
+                Bölüm
+              </th>
+              <th class="text-left">
+                Konum
+              </th>
+              <th class="text-left">
+                Ücret
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="item in departments"
+              :key="item.id"
+            >
+              <td>{{ item.departmentName }}</td>
+              <td>{{ item.location }}</td>
+              <td>{{ item.fee }}</td>
+              <td align="right">
+                <v-btn color="primary" class="btn" @click="makeAppointment(item)">
+                  Randevu Al
+                </v-btn>
+              </td>
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
+    </v-col>
+  </v-container>
 </template>
 
 <script>

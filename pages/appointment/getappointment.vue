@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <v-container>
     <PatientAppointment v-if="role === 'Patient'" :user-appointments="userAppointments" />
     <DoctorAppointment v-else-if="role === 'Doctor'" :user-appointments="userAppointments" />
-  </div>
+  </v-container>
 </template>
 
 <script>
