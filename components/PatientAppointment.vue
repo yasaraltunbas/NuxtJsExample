@@ -21,15 +21,31 @@
           </v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-action>
-          <v-btn class="ma-2" outlined color="primary" @click="onUpdated(appointment)">
+          <v-btn class="ma-2" block outlined color="primary" @click="onUpdated(appointment)">
             Randevunu güncelle
           </v-btn>
-          <v-btn class="ma-2" outlined color="error" @click="onDeleted(appointment)">
+          <v-btn class="ma-2" block outlined color="error" @click="showDeleteDialog(appointment)">
             Randevunu iptal et
           </v-btn>
         </v-list-item-action>
       </v-list-item>
     </v-list>
+    <v-dialog v-model="deleteDialog" max-width="500px">
+      <v-card>
+        <v-card-title class="headline">
+          Randevuyu iptal etmek istediğinize emin misiniz?
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn color="green darken-1" text @click="confirmDelete">
+            Evet
+          </v-btn>
+          <v-btn color="red darken-1" text @click="deleteDialog = false">
+            Hayır
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -42,6 +58,12 @@ export default {
       required: true
     }
   },
+  data () {
+    return {
+      deleteDialog: false,
+      appointmentToDelete: null
+    }
+  },
   methods: {
     onUpdated (appointment) {
       this.$router.push({
@@ -51,16 +73,23 @@ export default {
         }
       })
     },
-    onDeleted (appointment) {
-      const confirmDelete = confirm('Randevuyu iptal etmek istediğinize emin misiniz?')
-      if (confirmDelete) {
-        this.$axios.delete(`/appointment/DeleteAppointment/${appointment.id}`)
+    showDeleteDialog (appointment) {
+      this.appointmentToDelete = appointment
+      this.deleteDialog = true
+    },
+
+    confirmDelete () {
+      this.deleteDialog = false
+      if (this.appointmentToDelete) {
+        this.$axios.delete(`/appointment/DeleteAppointment/${this.appointmentToDelete.id}`)
           .then(() => {
             console.log('Randevu başarıyla iptal edildi')
-            this.$emit('appointmentDeleted', appointment.id)
+            this.$emit('appointmentDeleted', this.appointmentToDelete.id)
+            this.appointmentToDelete = null
           })
           .catch((error) => {
             console.error('Randevu iptal edilirken hata oluştu:', error)
+            this.appointmentToDelete = null
           })
       }
     }
@@ -72,5 +101,9 @@ export default {
   .v-container {
     max-width: 800px;
     margin: 0 auto;
+  }
+  .ma-2 {
+    margin: 0.5rem;
+    min-width: 150px;
   }
   </style>

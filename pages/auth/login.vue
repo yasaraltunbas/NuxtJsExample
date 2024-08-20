@@ -2,7 +2,7 @@
   <v-container>
     <v-row justify="center">
       <v-col cols="12" md="4">
-        <v-card>
+        <v-card class="login-card">
           <v-card-title>
             <span class="headline">Giriş Yap</span>
             <v-spacer />
@@ -85,8 +85,10 @@ export default {
   font-weight: bold;
 }
 .register-link {
-  text-decoration: none;
+
   color: #1976D2;
-  font-weight: bold;
+}
+.login-card {
+  margin-top: 350px;
 }
 </style>

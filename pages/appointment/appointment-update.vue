@@ -32,13 +32,34 @@
         label="Sebep"
         required
       />
-      <v-btn color="primary" type="submit">
-        Randevuyu Güncelle
-      </v-btn>
     </v-form>
     <v-alert v-if="message" type="info">
       {{ message }}
     </v-alert>
+    <v-row>
+      <v-col cols="12" class="text-right">
+        <v-btn color="primary" @click="showDialog = true">
+          Randevuyu Güncelle
+        </v-btn>
+      </v-col>
+    </v-row>
+
+    <v-dialog v-model="showDialog" max-width="500px">
+      <v-card>
+        <v-card-title class="headline">
+          Randevuyu Güncellemek İstiyor Musunuz?
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn color="green darken-1" text @click="confirmUpdate">
+            Evet
+          </v-btn>
+          <v-btn color="red darken-1" text @click="showDialog = false">
+            Hayır
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -57,7 +78,8 @@ export default {
       },
       doctors: [],
       message: '',
-      menu: false
+      menu: false,
+      showDialog: false
     }
   },
   created () {
@@ -65,12 +87,15 @@ export default {
     this.fetchAppointmentDetails()
   },
   methods: {
-    async updateAppointment () {
+    updateAppointment () {
       if (new Date(this.appointment.date) <= new Date()) {
         this.message = 'Geçerli bir tarih giriniz.'
         return
       }
-
+      this.showDialog = true
+    },
+    async confirmUpdate () {
+      this.showDialog = false
       try {
         const response = await this.$axios.put(`/appointment/update/${this.$route.query.appointmentId}`, this.appointment)
         console.log('Appointment updated:', response.data)

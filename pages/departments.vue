@@ -61,7 +61,8 @@ export default {
       this.$router.push({
         path: '/appointment/appointment',
         query: {
-          departmentId: department.id
+          departmentId: department.id,
+          departmentName: department.departmentName
         }
       })
     }

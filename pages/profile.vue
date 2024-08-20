@@ -1,55 +1,55 @@
 <template>
   <v-container class="profile-container">
     <v-row>
-      <v-col cols="12">
-        <h1>Profile</h1>
+      <v-col cols="8">
+        <h1>Profil</h1>
       </v-col>
     </v-row>
     <v-form v-if="profileUpdated" class="profile-form">
       <v-row>
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="4">
           <v-text-field
             v-model="form.firstName"
             label="İsim"
             readonly
           />
         </v-col>
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="4">
           <v-text-field
             v-model="form.lastName"
             label="Soy İsim"
             readonly
           />
         </v-col>
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="4">
           <v-text-field
             v-model="form.email"
             label="Email"
             readonly
           />
         </v-col>
-        <v-col v-if="form.role === 'Patient'" cols="12" md="6">
+        <v-col v-if="form.role === 'Patient'" cols="12" md="4">
           <v-text-field
             v-model="form.gender"
             label="Cinsiyet"
             readonly
           />
         </v-col>
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="4">
           <v-text-field
             v-model="form.phoneNumber"
             label="Telefon Numarası"
             readonly
           />
         </v-col>
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="4">
           <v-text-field
             v-model="form.address"
             label="Adres"
             readonly
           />
         </v-col>
-        <v-col v-if="form.role === 'Patient'" cols="12" md="6">
+        <v-col v-if="form.role === 'Patient'" cols="12" md="4">
           <v-text-field
             v-model="form.bloodType"
             label="Kan Grubu"
@@ -68,35 +68,35 @@
     </v-form>
     <v-form v-if="!profileUpdated" class="profile-form">
       <v-row>
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="4">
           <v-text-field
             v-model="form.firstName"
             label="İsim"
             required
           />
         </v-col>
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="4">
           <v-text-field
             v-model="form.lastName"
             label="Soy İsim"
             required
           />
         </v-col>
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="4">
           <v-text-field
             v-model="form.email"
             label="Email"
             required
           />
         </v-col>
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="4">
           <v-text-field
             v-model="form.gender"
             label="Cinsiyet"
             required
           />
         </v-col>
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="4">
           <v-text-field
             v-model="form.phoneNumber"
             label="Telefon Numarası"

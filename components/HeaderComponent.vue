@@ -2,7 +2,10 @@
   <v-cointeiner>
     <v-app>
       <v-app-bar v-if="!isAuthPage" app color="primary" dark>
-        <v-toolbar-title>Hastane App</v-toolbar-title>
+        <v-toolbar-title class="title-hospital">
+          Hastane App
+        </v-toolbar-title>
+
         <v-spacer />
         <v-toolbar-items>
           <v-btn text to="/">
@@ -55,11 +58,10 @@
           </v-btn>
         </v-toolbar-items>
         <v-spacer />
-        <v-btn color="grey" @click="logout">
+        <v-btn color="grey" class="btn-out" @click="logout">
           <v-icon left>
             mdi-logout
           </v-icon>
-          Çıkış Yap
         </v-btn>
       </v-app-bar>
 
@@ -98,5 +100,12 @@ export default {
 
 .profile {
   margin-left: auto;
+}
+.title-hospital {
+  font-size: 24px;
+  margin-left: 400px;
+}
+.btn-out {
+  margin-right: 400px;
 }
 </style>

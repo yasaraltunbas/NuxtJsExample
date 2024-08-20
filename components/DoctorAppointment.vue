@@ -24,13 +24,13 @@
               </v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
-              <v-btn color="primary" @click="viewDetails(appointment.patient.id)">
+              <v-btn color="primary" block @click="viewDetails(appointment.patient.id)">
                 Detay
               </v-btn>
-              <v-btn color="secondary" @click="addMedicalRecord(appointment.patient.id, appointment.id)">
+              <v-btn color="secondary" block @click="addMedicalRecord(appointment.patient.id, appointment.id)">
                 İşlem Ekle
               </v-btn>
-              <v-btn color="error" @click="goToAddAdmission(appointment.patientId)">
+              <v-btn color="error" block @click="goToAddAdmission(appointment.patientId)">
                 Hasta İçin Yatış Ekleyin
               </v-btn>
             </v-list-item-action>
@@ -85,5 +85,9 @@ export default {
   .v-container {
     max-width: 800px;
     margin: 0 auto;
+  }
+  .v-btn {
+    min-width: 150px;
+    margin-bottom: 5px;
   }
   </style>

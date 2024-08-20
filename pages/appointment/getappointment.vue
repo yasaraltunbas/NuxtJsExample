@@ -1,7 +1,11 @@
 <template>
   <v-container>
-    <PatientAppointment v-if="role === 'Patient'" :user-appointments="userAppointments" />
-    <DoctorAppointment v-else-if="role === 'Doctor'" :user-appointments="userAppointments" />
+    <v-row justify="center">
+      <v-col cols="8" md="4">
+        <PatientAppointment v-if="role === 'Patient'" :user-appointments="userAppointments" />
+        <DoctorAppointment v-else-if="role === 'Doctor'" :user-appointments="userAppointments" />
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 

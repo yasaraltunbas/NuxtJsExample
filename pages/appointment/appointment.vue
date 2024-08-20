@@ -7,14 +7,14 @@
     </v-row>
     <v-form @submit.prevent="createAppointment">
       <v-row>
-        <v-col cols="12" md="6">
+        <v-col cols="12">
           <v-text-field
-            v-model="appointment.departmentId"
+            v-model="departmentName"
             label="Bölüm"
             disabled
           />
         </v-col>
-        <v-col cols="12" md="6">
+        <v-col cols="12">
           <v-select
             v-model="appointment.doctorId"
             label="Doktor"
@@ -24,7 +24,7 @@
             required
           />
         </v-col>
-        <v-col cols="12" md="6">
+        <v-col cols="12">
           <v-menu
             ref="menu"
             v-model="menu"
@@ -51,23 +51,20 @@
             />
           </v-menu>
         </v-col>
-        <v-col cols="12" md="6">
+        <v-col cols="12">
           <v-text-field
             v-model="appointment.reason"
-            label="Sebep"
+            label="Şikayet"
             required
           />
         </v-col>
-        <v-col cols="12">
+        <v-col cols="12" class="text-right">
           <v-btn color="primary" type="submit">
             Randevu Al
           </v-btn>
         </v-col>
       </v-row>
     </v-form>
-    <v-alert v-if="message" type="info">
-      {{ message }}
-    </v-alert>
   </v-container>
 </template>
 
@@ -75,14 +72,15 @@
 export default {
   data () {
     const { departmentId } = this.$route.query
+    const { departmentName } = this.$route.query
 
     return {
       appointment: {
-
         departmentId,
         date: null,
         reason: ''
       },
+      departmentName,
       doctors: [],
       message: '',
       menu: false
