@@ -1,18 +1,26 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <v-col cols="12" md="3">
+      <v-col cols="12" md="8">
         <h2>Yatış İşlemleriniz</h2>
-        <v-list>
-          <v-list-item v-for="admission in admissions" :key="admission.id">
-            <v-list-item-content>
-              <v-list-item-subtitle>
-                <strong>Yatış Tarihi:</strong> {{ admission.date }} <br>
-                <strong>Sebep:</strong> {{ admission.reason }} <br>
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
+        <v-simple-table v-if="admissions.length" class="simple-table">
+          <thead>
+            <tr>
+              <th class="text-left">
+                Yatış Tarihi
+              </th>
+              <th class="text-left">
+                Sebep
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="admission in admissions" :key="admission.id">
+              <td>{{ admission.date }}</td>
+              <td>{{ admission.reason }}</td>
+            </tr>
+          </tbody>
+        </v-simple-table>
       </v-col>
     </v-row>
   </v-container>
@@ -41,8 +49,9 @@ export default {
 }
 </script>
 
-    <style scoped>
-    .container {
-      padding: 20px;
-    }
-    </style>
+<style>
+.simple-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+</style>

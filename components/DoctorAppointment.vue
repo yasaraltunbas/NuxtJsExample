@@ -17,7 +17,7 @@
                 <strong>Hasta:</strong> {{ appointment.patient.firstName }} {{ appointment.patient.lastName }}
               </v-list-item-title>
               <v-list-item-subtitle>
-                <strong>Tarih:</strong> {{ appointment.formattedDate }}
+                <strong>Tarih:</strong> {{ appointment.date | formatDate }}
               </v-list-item-subtitle>
               <v-list-item-subtitle>
                 <strong>Şikayet:</strong> {{ appointment.reason }}
@@ -46,14 +46,6 @@ export default {
   props: {
     userAppointments: {
       type: Array,
-      required: true
-    },
-    doctorId: {
-      type: Number,
-      required: true
-    },
-    departmentId: {
-      type: Number,
       required: true
     }
   },

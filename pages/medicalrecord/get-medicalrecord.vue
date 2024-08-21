@@ -8,7 +8,7 @@
           <v-list-item v-for="record in medicalRecords" :key="record.id">
             <v-list-item-content>
               <v-list-item-title>
-                <strong>Tarih:</strong> {{ record.date }}
+                <strong>Tarih:</strong> {{ record.date | formatDate }} <br>
               </v-list-item-title>
               <v-list-item-subtitle>
                 <strong>Teşhis:</strong> {{ record.diagnosis }} <br>

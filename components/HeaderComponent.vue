@@ -10,49 +10,44 @@
           </v-col>
           <v-col cols="auto">
             <v-toolbar-items class="toolbar-items">
-              <v-btn text to="/">
+              <v-btn text to="/" class="menu-item">
                 <v-icon left>
                   mdi-home
                 </v-icon>
                 Ana Sayfa
               </v-btn>
-              <v-btn v-if="userRole === 'Patient'" text to="/departments">
+              <v-btn v-if="userRole === 'Patient'" text to="/departments" class="menu-item">
                 <v-icon left>
                   mdi-hospital-building
                 </v-icon>
                 Bölümler
               </v-btn>
-              <v-btn text to="/appointment/getappointment">
+              <v-btn text to="/appointment/getappointment" class="menu-item">
                 <v-icon left>
                   mdi-calendar-check
                 </v-icon>
                 Randevularım
               </v-btn>
-              <v-btn v-if="userRole === 'Patient'" text to="/appointment/get-ex-appointment">
+              <v-btn v-if="userRole === 'Patient'" text to="/appointment/get-ex-appointment" class="menu-item">
                 <v-icon left>
                   mdi-calendar-clock
                 </v-icon>
                 Geçmiş Randevularım
               </v-btn>
-              <v-btn v-if="userRole === 'Patient'" text to="/medicalrecord/get-ex-medicalrecord">
-                <v-icon left>
-                  mdi-file-document-box
-                </v-icon>
-                Geçmiş Muayenelerim
-              </v-btn>
-              <v-btn v-if="userRole === 'Doctor'" text to="/admission/get-admission-doctor">
+
+              <v-btn v-if="userRole === 'Doctor'" text to="/admission/get-admission-doctor" class="menu-item">
                 <v-icon left>
                   mdi-calendar-clock
                 </v-icon>
                 Yatışta Olan Hastalarınız
               </v-btn>
-              <v-btn v-if="userRole === 'Patient'" text to="/admission/get-admission-patient">
+              <v-btn v-if="userRole === 'Patient'" text to="/admission/get-admission-patient" class="menu-item">
                 <v-icon left>
                   mdi-calendar-clock
                 </v-icon>
                 Yatış Bilgileriniz
               </v-btn>
-              <v-btn text to="/profile">
+              <v-btn text to="/profile" class="menu-item">
                 <v-icon left>
                   mdi-account
                 </v-icon>
@@ -60,6 +55,10 @@
               </v-btn>
             </v-toolbar-items>
           </v-col>
+          <v-text class="menu-item">
+            {{ userRole === 'Doctor' ? 'Doktor' : 'Hasta' }}
+          </v-text>
+
           <v-col cols="auto">
             <v-btn color="grey" class="btn-out" @click="logout">
               <v-icon left>
@@ -103,6 +102,10 @@ export default {
   flex-wrap: wrap;
 }
 
+.menu-item {
+  margin-right: 16px;
+}
+
 .title-hospital {
   font-size: 1.25rem;
 }
@@ -119,7 +122,4 @@ export default {
     font-size: 0.875rem;
   }
 }
-  .app-row {
-    padding: 0 16px;
-  }
 </style>

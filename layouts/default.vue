@@ -1,16 +1,16 @@
 <template>
-  <v-container fluid class="no-padding">
+  <v-container fluid class="default-c">
     <v-app>
-      <v-row justify="center" class="no-padding">
-        <v-col cols="12" md="12" class="no-padding">
-          <v-container fluid class="no-padding">
-            <v-row class="no-padding">
-              <v-col cols="12" class="no-padding">
+      <v-row aling="center" justify="center">
+        <v-col cols="12" md="12">
+          <v-container fluid>
+            <v-row>
+              <v-col cols="12">
                 <HeaderComponent />
               </v-col>
             </v-row>
-            <v-row class="no-padding">
-              <v-col cols="12" class="no-padding">
+            <v-row>
+              <v-col cols="12">
                 <FooterComponent />
               </v-col>
             </v-row>
@@ -33,8 +33,8 @@ export default {
 </script>
 
 <style scoped>
-.no-padding {
-  padding: 0 !important;
-  margin: 0 !important;
+.default-c {
+  padding: 0 ;
+  margin: 0 ;
 }
 </style>

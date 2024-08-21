@@ -28,7 +28,7 @@
           </thead>
           <tbody>
             <tr v-for="ms in medicalRecords" :key="ms.id">
-              <td>{{ formatDate(ms.date) }}</td>
+              <td>{{ ms.date | formatDate }}</td>
               <td>{{ ms.doctorName }}</td>
               <td>{{ ms.diagnosis }}</td>
               <td>{{ ms.treatment }}</td>
@@ -45,10 +45,14 @@
   </v-container>
 </template>
 <script>
+
 export default {
   data () {
+    const { appointmentId } = this.$route.query
+
     return {
-      medicalRecords: []
+      medicalRecords: [],
+      appointmentId
     }
   },
   created () {
@@ -57,18 +61,15 @@ export default {
   methods: {
     async fetchData () {
       try {
-        const response = await this.$axios.get('/patient/account')
+        const response = await this.$axios.get(`/medicalrecord/appointment/${this.appointmentId}`)
         console.log('API Response:', response.data)
         this.medicalRecords = response.data || []
         console.log('Medical Records:', this.medicalRecords)
       } catch (error) {
         console.error('Veriler alınırken hata oluştu:', error)
       }
-    },
-    formatDate (date) {
-      const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }
-      return new Date(date).toLocaleDateString(undefined, options)
     }
+
   }
 }
 </script>

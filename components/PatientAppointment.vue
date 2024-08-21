@@ -14,7 +14,7 @@
             <strong>Doktor:</strong> {{ appointment.doctor.firstName }} {{ appointment.doctor.lastName }}
           </v-list-item-subtitle>
           <v-list-item-subtitle>
-            <strong>Tarih:</strong> {{ appointment.formattedDate }}
+            <strong>Tarih:</strong> {{ appointment.date | formatDate }}
           </v-list-item-subtitle>
           <v-list-item-subtitle>
             <strong>Şikayet:</strong> {{ appointment.reason }}
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'PatientAppointment',
   props: {

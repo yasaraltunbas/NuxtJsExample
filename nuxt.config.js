@@ -22,6 +22,7 @@ export default {
   ],
 
   plugins: [
+    '~/plugins/filters.js'
   ],
 
   components: true,
@@ -41,6 +42,21 @@ export default {
     baseURL: 'http://localhost:5114/api'
   },
   build: {
+    extend (config, { isDev, isClient }) {
+      if (isClient) {
+        config.module.rules.push({
+          test: /\.mjs$/,
+          include: /node_modules/,
+          type: 'javascript/auto',
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env']
+            }
+          }
+        })
+      }
+    }
   },
   auth: {
     redirect: {

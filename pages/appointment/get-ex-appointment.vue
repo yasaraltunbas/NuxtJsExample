@@ -13,19 +13,27 @@
                 Doktor
               </th>
               <th class="text-left">
-                Bölüm
+                Böl
               </th>
               <th class="text-left">
                 Ücret
+              </th>
+              <th class="text-left">
+                Detay
               </th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="appointment in appointments" :key="appointment.id">
-              <td>{{ formatDate(appointment.date) }}</td>
+              <td>{{ appointment.date | formatDate }}</td>
               <td>{{ appointment.doctorName }}</td>
               <td>{{ appointment.departmentName }}</td>
               <td>{{ appointment.fee }}</td>
+              <td>
+                <v-btn color="primary" @click="goToDetails(appointment)">
+                  Detay
+                </v-btn>
+              </td>
             </tr>
           </tbody>
         </v-simple-table>
@@ -51,27 +59,16 @@ export default {
     async fetchAppointments () {
       try {
         const response = await this.$axios.get('/patient/exappointment')
-        console.log('API Response:', response.data)
-        this.appointments = response.data || []
-        console.log('Appointments:', this.appointments)
+        this.appointments = response.data
+        console.log('Appointments:', this.appointments) // Veri kontrolü için
       } catch (error) {
-        console.error('Veriler alınırken hata oluştu:', error)
+        console.error('Error fetching appointments:', error)
       }
     },
-    formatDate (date) {
-      const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }
-      return new Date(date).toLocaleDateString(undefined, options)
+    goToDetails (appointment) {
+      console.log('Selected Appointment:', appointment) // Debugging için
+      this.$router.push({ path: '/medicalrecord/get-ex-medicalrecord', query: { appointmentId: appointment.id } })
     }
   }
 }
 </script>
-
-  <style scoped>
-  .v-container {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  .ex-table {
-    margin-top: 20px;
-  }
-  </style>
