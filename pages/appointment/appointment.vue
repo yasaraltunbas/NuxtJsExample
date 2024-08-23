@@ -5,7 +5,10 @@
         <h1>Randevu Al</h1>
       </v-col>
     </v-row>
-    <v-form @submit.prevent="createAppointment">
+    <v-alert v-if="message" type="error" dismissible @input="message = ''">
+      {{ message }}
+    </v-alert>
+    <v-form ref="form" @submit.prevent="createAppointment">
       <v-row>
         <v-col cols="12">
           <v-text-field
@@ -22,6 +25,7 @@
             item-text="fullName"
             item-value="id"
             required
+            @change="validateForm"
           />
         </v-col>
         <v-col cols="12">
@@ -43,11 +47,12 @@
                 v-bind="attrs"
                 required
                 v-on="on"
+                @input="validateForm"
               />
             </template>
             <v-date-picker
               v-model="appointment.date"
-              @input="menu = false"
+              @input="menu = false; validateForm"
             />
           </v-menu>
         </v-col>
@@ -56,10 +61,11 @@
             v-model="appointment.reason"
             label="Şikayet"
             required
+            @input="validateForm"
           />
         </v-col>
         <v-col cols="12" class="text-right">
-          <v-btn color="primary" type="submit">
+          <v-btn :disabled="!formValid" color="primary" type="submit">
             Randevu Al
           </v-btn>
         </v-col>
@@ -75,8 +81,10 @@ export default {
     const { departmentName } = this.$route.query
 
     return {
+      formValid: false,
       appointment: {
         departmentId,
+        doctorId: null,
         date: null,
         reason: ''
       },
@@ -117,14 +125,20 @@ export default {
       } catch (error) {
         console.error('Error fetching doctors:', error)
       }
+    },
+
+    validateForm () {
+      this.formValid = this.appointment.doctorId !== null &&
+                       this.appointment.date !== null &&
+                       this.appointment.reason.trim() !== ''
     }
   }
 }
 </script>
 
-  <style scoped>
-  .v-container {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  </style>
+<style scoped>
+.v-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+</style>

@@ -16,7 +16,7 @@
           </thead>
           <tbody>
             <tr v-for="admission in admissions" :key="admission.id">
-              <td>{{ admission.date }}</td>
+              <td>{{ admission.date | formatDate }}</td>
               <td>{{ admission.reason }}</td>
             </tr>
           </tbody>

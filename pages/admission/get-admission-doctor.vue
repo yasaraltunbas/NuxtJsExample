@@ -30,11 +30,8 @@
 export default {
   data () {
     return {
-      admissions: [],
-      headers: [
-        { text: 'Yatış Tarihi', value: 'date' },
-        { text: 'Sebep', value: 'reason' }
-      ]
+      admissions: []
+
     }
   },
   created () {
