@@ -85,13 +85,15 @@
         <v-col cols="12" md="4">
           <v-text-field
             v-model="form.email"
+            :rules="emailRules"
             label="Email"
             required
           />
         </v-col>
         <v-col cols="12" md="4">
-          <v-text-field
+          <v-select
             v-model="form.gender"
+            :items="genders"
             label="Cinsiyet"
             required
           />
@@ -99,12 +101,28 @@
         <v-col cols="12" md="4">
           <v-text-field
             v-model="form.phoneNumber"
+            :rules="phoneNumberRules"
             label="Telefon Numarası"
             required
           />
         </v-col>
+        <v-col cols="12" md="4">
+          <v-text-field
+            v-model="form.address"
+            label="Adres"
+            required
+          />
+        </v-col>
+        <v-col cols="12" md="4">
+          <v-select
+            v-model="form.bloodType"
+            :items="bloodTypes"
+            label="Kan Grubu"
+            required
+          />
+        </v-col>
         <v-col cols="12">
-          <v-btn color="primary" @click="updateProfile">
+          <v-btn color="primary" @click="confirmUpdate">
             Güncelle
           </v-btn>
         </v-col>
@@ -128,7 +146,23 @@ export default {
         bloodType: '',
         role: 'Patient'
       },
-      profileUpdated: true
+      profileUpdated: true,
+      genders: ['Erkek', 'Kadın'],
+      bloodTypes: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', '0+', '0-'],
+      emailRules: [
+        value => !!value || 'Required.',
+        value => (value || '').length <= 20 || 'Max 20 characters',
+        (value) => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          return pattern.test(value) || 'Invalid e-mail.'
+        }
+      ],
+      phoneNumberRules: [
+        value => !!value || 'Required.',
+        value => /^\d+$/.test(value) || 'Yalnızca sayı giriniz',
+        value => value.startsWith('5') || 'Telefon numaranız 5 ile başlamalı',
+        value => (value || '').length === 10 || '10 Karakterden oluşmalı'
+      ]
     }
   },
   async mounted () {
@@ -144,6 +178,7 @@ export default {
       try {
         await this.$axios.put('/auth/UpdateUser', this.form)
         alert('Profile updated successfully')
+        this.profileUpdated = true
       } catch (error) {
         console.error('Profile güncellenirken hata oluştu:', error)
       }
@@ -165,17 +200,23 @@ export default {
     },
     isUpdate () {
       this.profileUpdated = !this.profileUpdated
+    },
+    confirmUpdate () {
+      const confirmUpdate = confirm('Güncellemek istediğinize emin misiniz?')
+      if (confirmUpdate) {
+        this.updateProfile()
+      }
     }
   }
 }
 </script>
 
-  <style scoped>
-  .profile-container {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  .profile-form {
-    margin-top: 20px;
-  }
-  </style>
+<style scoped>
+.profile-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.profile-form {
+  margin-top: 20px;
+}
+</style>

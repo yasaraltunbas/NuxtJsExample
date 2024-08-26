@@ -19,6 +19,9 @@
                 Ücret
               </th>
               <th class="text-left">
+                Durum
+              </th>
+              <th class="text-left">
                 Detay
               </th>
             </tr>
@@ -29,6 +32,7 @@
               <td>{{ appointment.doctorName }}</td>
               <td>{{ appointment.departmentName }}</td>
               <td>{{ appointment.fee }}</td>
+              <td>{{ translateStatus(appointment.status) }}</td>
               <td>
                 <v-btn color="primary" @click="goToDetails(appointment)">
                   Detay
@@ -59,15 +63,25 @@ export default {
     async fetchAppointments () {
       try {
         const response = await this.$axios.get('/patient/exappointment')
+        this.upcomingAppointments = response.data.sort((a, b) => new Date(a.date) - new Date(b.date))
+
         this.appointments = response.data
-        console.log('Appointments:', this.appointments) // Veri kontrolü için
+        console.log('Appointments:', this.appointments)
       } catch (error) {
         console.error('Error fetching appointments:', error)
       }
     },
     goToDetails (appointment) {
-      console.log('Selected Appointment:', appointment) // Debugging için
       this.$router.push({ path: '/medicalrecord/get-ex-medicalrecord', query: { appointmentId: appointment.id } })
+    },
+    translateStatus (status) {
+      const statusMap = {
+        Pending: 'Beklemede',
+        Approved: 'Onaylandı',
+        Completed: 'Tamamlandı',
+        Rejected: 'Reddedildi'
+      }
+      return statusMap[status] || status
     }
   }
 }

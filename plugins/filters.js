@@ -8,3 +8,13 @@ Vue.filter('formatDate', (value) => {
   }
   return ''
 })
+
+Vue.filter('formatStatus', (value) => {
+  const statusMap = {
+    Pending: 'Beklemede',
+    Approved: 'Onaylandı',
+    Completed: 'Tamamlandı',
+    Rejected: 'Reddedildi'
+  }
+  return statusMap[value] || value
+})

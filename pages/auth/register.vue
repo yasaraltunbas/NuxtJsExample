@@ -10,6 +10,7 @@
             <v-form @submit.prevent="register">
               <v-text-field
                 v-model="form.email"
+                :rules="emailRules"
                 label="Email"
                 type="email"
                 required
@@ -46,6 +47,7 @@
               />
               <v-text-field
                 v-model="form.phoneNumber"
+                :rules="phoneNumberRules"
                 label="Telefon Numarası"
                 type="text"
                 required
@@ -91,10 +93,10 @@
                   </v-btn>
                 </v-date-picker>
               </v-menu>
-              <v-text-field
+              <v-select
                 v-model="form.bloodType"
+                :items="bloodTypes"
                 label="Kan Grubu"
-                type="text"
                 required
               />
               <v-text-field
@@ -140,7 +142,23 @@ export default {
         bloodType: '',
         balance: 0
       },
-      menu: false
+      menu: false,
+      bloodTypes: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', '0+', '0-'],
+      emailRules: [
+        value => !!value || 'Required.',
+        value => (value || '').length <= 20 || 'Max 20 characters',
+        (value) => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          return pattern.test(value) || 'Invalid e-mail.'
+        }
+      ],
+      phoneNumberRules: [
+        value => !!value || 'Required.',
+        value => /^\d+$/.test(value) || 'Yalnızca sayı giriniz',
+
+        value => value.startsWith('5') || 'Telefon numaranız 5 ile başlamalı',
+        value => (value || '').length === 10 || '10 Karakterden oluşmalı'
+      ]
     }
   },
   methods: {

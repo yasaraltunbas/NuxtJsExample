@@ -48,6 +48,8 @@ export default {
       try {
         const endpoint = this.role === 'Doctor' ? '/doctor/appointments' : '/patient/appointments'
         const response = await this.$axios.get(endpoint)
+        this.upcomingAppointments = response.data.sort((a, b) => new Date(a.date) - new Date(b.date))
+
         this.userAppointments = response.data.map((appointment) => {
           return {
             ...appointment

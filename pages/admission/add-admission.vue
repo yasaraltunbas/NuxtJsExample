@@ -57,7 +57,7 @@ export default {
       this.$axios.post('/admission/create', this.admission)
         .then((response) => {
           console.log('Admission added:', response.data)
-          this.$router.push({ path: '/components/DoctorAppointment' })
+          this.$router.push({ path: '/doctor/appointments/_aid' })
         })
         .catch((error) => {
           console.error('Error adding admission:', error)

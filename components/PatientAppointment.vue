@@ -65,6 +65,11 @@ export default {
       appointmentToDelete: null
     }
   },
+  computed: {
+    sortedAppointments () {
+      return this.userAppointments.slice().sort((a, b) => new Date(a.date) - new Date(b.date))
+    }
+  },
   methods: {
     onUpdated (appointment) {
       this.$router.push({
