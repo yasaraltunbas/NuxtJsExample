@@ -72,10 +72,12 @@ export default {
   },
   methods: {
     onUpdated (appointment) {
+      console.log('departmentId: ', appointment.department.id)
       this.$router.push({
         path: '/appointment/appointment-update',
         query: {
-          appointmentId: appointment.id
+          appointmentId: appointment.id,
+          departmentId: appointment.department.id
         }
       })
     },
@@ -103,13 +105,13 @@ export default {
 }
 </script>
 
-  <style scoped>
-  .v-container {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  .ma-2 {
-    margin: 0.5rem;
-    min-width: 150px;
-  }
-  </style>
+<style scoped>
+.v-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.ma-2 {
+  margin: 0.5rem;
+  min-width: 150px;
+}
+</style>

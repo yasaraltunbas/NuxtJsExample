@@ -41,7 +41,7 @@ export default {
         this.upcomingAppointments = response.data.sort((a, b) => new Date(a.date) - new Date(b.date))
 
         this.upcomingAppointments = response.data
-        console.log('Upcoming Appointments:', this.upcomingAppointments) // Veri kontrolü için
+        console.log('Upcoming Appointments:', this.upcomingAppointments)
       } catch (error) {
         console.error('Error fetching upcoming appointments:', error)
       }

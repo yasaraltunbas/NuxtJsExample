@@ -12,12 +12,16 @@
               <th class="text-left">
                 Sebep
               </th>
+              <th class="text-left">
+                Durum
+              </th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="admission in admissions" :key="admission.id">
               <td>{{ admission.date | formatDate }}</td>
               <td>{{ admission.reason }}</td>
+              <td> {{ admission.status | formatAdmissionStatus }} </td>
             </tr>
           </tbody>
         </v-simple-table>
@@ -40,6 +44,7 @@ export default {
     async fetchPatients () {
       try {
         const response = await this.$axios.get('/patient/admissions')
+        this.admissions = response.data.sort((a, b) => new Date(a.date) - new Date(b.date))
         this.admissions = response.data
       } catch (error) {
         console.error('Error fetching patients:', error)

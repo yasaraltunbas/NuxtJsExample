@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row justify="center">
       <v-col cols="12" md="8">
-        <component :is="userRole === 'Patient' ? 'patient-home' : 'doctor-home'" />
+        <component :is="role === 'Patient' ? 'patient-home' : 'doctor-home'" />
       </v-col>
     </v-row>
   </v-container>
@@ -19,7 +19,20 @@ export default {
   },
   data () {
     return {
-      userRole: 'Patient'
+      role: ''
+    }
+  },
+  created () {
+    this.fetchUserRole()
+  },
+  methods: {
+    async fetchUserRole () {
+      try {
+        const response = await this.$axios.get('/auth/user')
+        this.role = response.data.role
+      } catch (error) {
+        console.error('Error fetching user role:', error)
+      }
     }
   }
 }

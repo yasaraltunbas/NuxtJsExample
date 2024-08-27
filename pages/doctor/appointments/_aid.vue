@@ -26,12 +26,18 @@
                 <strong>Şikayet:</strong> {{ appointment.reason }}
               </v-list-item-subtitle>
               <v-list-item-action>
-                <v-btn color="secondary" block @click="addMedicalRecord(appointment.patientId, appointment.id)">
-                  İşlem Ekle
-                </v-btn>
-                <v-btn color="error" block @click="goToAddAdmission(appointment.patientId)">
-                  Hasta İçin Yatış Ekleyin
-                </v-btn>
+                <v-row justify="end">
+                  <v-col cols="2">
+                    <v-btn color="primary" block @click="addMedicalRecord(appointment.patientId, appointment.id)">
+                      İşlem Ekle
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="2">
+                    <v-btn color="primary" block @click="goToAddAdmission(appointment.patientId, appointment.id)">
+                      Hasta İçin Yatış Ekleyin
+                    </v-btn>
+                  </v-col>
+                </v-row>
               </v-list-item-action>
             </v-list-item-content>
           </v-list-item>
@@ -40,6 +46,7 @@
         <GetExAppointment :patient-id="appointment.patientId" />
 
         <GetAllMedicalRecord :patient-id="appointment.patientId" />
+        <GetExAdmissionByDoctor :patient-id="appointment.patientId" />
       </v-col>
     </v-row>
     <v-row v-else>
@@ -55,11 +62,13 @@
 <script>
 import GetExAppointment from '~/components/GetExAppointment.vue'
 import GetAllMedicalRecord from '~/components/GetAllMedicalRecord.vue'
+import GetExAdmissionByDoctor from '~/components/GetExAdmissionByDoctor.vue'
 
 export default {
   components: {
     GetExAppointment,
-    GetAllMedicalRecord
+    GetAllMedicalRecord,
+    GetExAdmissionByDoctor
   },
   data () {
     return {
@@ -86,10 +95,10 @@ export default {
     addMedicalRecord (patientId, appointmentId) {
       this.$router.push({ path: '/medicalrecord/add-medicalrecord', query: { patientId, appointmentId } })
     },
-    goToAddAdmission (patientId) {
+    goToAddAdmission (patientId, appointmentId) {
       this.$router.push({
         path: '/admission/add-admission',
-        query: { patientId }
+        query: { patientId, appointmentId }
       })
     }
   }
@@ -104,10 +113,5 @@ export default {
 .v-btn {
   min-width: 150px;
   margin-bottom: 5px;
-}
-.v-list-item-action {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
 }
 </style>

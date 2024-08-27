@@ -55,10 +55,9 @@
               </v-btn>
             </v-toolbar-items>
           </v-col>
-          <v-text class="menu-item">
+          <span>
             {{ userRole === 'Doctor' ? 'Doktor' : 'Hasta' }}
-          </v-text>
-
+          </span>
           <v-col cols="auto">
             <v-btn color="grey" class="btn-out" @click="logout">
               <v-icon left>

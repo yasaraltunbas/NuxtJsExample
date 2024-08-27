@@ -7,17 +7,30 @@
           <thead>
             <tr>
               <th class="text-left">
+                Hasta Adı
+              </th>
+              <th class="text-left">
                 Yatış Tarihi
               </th>
               <th class="text-left">
                 Sebep
               </th>
+              <th class="text-left">
+                Durum
+              </th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="admission in admissions" :key="admission.id">
+              <td>{{ admission.patientName }}</td>
               <td>{{ admission.date | formatDate }}</td>
               <td>{{ admission.reason }}</td>
+              <td>{{ admission.status }}</td>
+              <td>
+                <v-btn color="red" @click="dischargePatient(admission.id)">
+                  Taburcu Et
+                </v-btn>
+              </td>
             </tr>
           </tbody>
         </v-simple-table>
@@ -31,7 +44,6 @@ export default {
   data () {
     return {
       admissions: []
-
     }
   },
   created () {
@@ -41,38 +53,32 @@ export default {
     async fetchPatients () {
       try {
         const response = await this.$axios.get('/doctor/admissions')
+        this.admissions = response.data.sort((a, b) => new Date(a.date) - new Date(b.date))
+
         this.admissions = response.data
       } catch (error) {
         console.error('Error fetching patients:', error)
+      }
+    },
+    async dischargePatient (admissionId) {
+      try {
+        await this.$axios.delete(`/admission/discharge/${admissionId}`)
+        this.admissions = this.admissions.filter(admission => admission.id !== admissionId)
+      } catch (error) {
+        console.error('Error discharging patient:', error)
       }
     }
   }
 }
 </script>
-<style>
+
+<style scoped>
+
 .simple-table {
   width: 100%;
   border-collapse: collapse;
 }
-
-.simple-table th, .simple-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
+.v-btn {
+  margin: 0;
 }
-
-.simple-table th {
-  background-color: black;
-  color: black;
-  text-align: left;
-}
-
-.simple-table td {
-  background-color: gray;
-  color: #333;
-}
-.simple-table text{
-  color: white;
-  font-weight: bold;
-}
-
 </style>

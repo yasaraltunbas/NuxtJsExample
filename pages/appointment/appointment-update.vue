@@ -14,7 +14,7 @@
         <template #activator="{ on, attrs }">
           <v-text-field
             v-model="appointment.date"
-            label="Tarih"
+            label="Tarih "
             prepend-icon="mdi-calendar"
             readonly
             v-bind="attrs"
@@ -29,7 +29,7 @@
       </v-menu>
       <v-text-field
         v-model="appointment.reason"
-        label="Sebep"
+        label="Şikayet"
         required
       />
     </v-form>
@@ -66,24 +66,21 @@
 <script>
 export default {
   data () {
-    const { departmentId, appointmentId } = this.$route.query
+    const { appointmentId } = this.$route.query
 
     return {
       appointment: {
         doctorId: '',
-        departmentId,
         date: null,
         reason: '',
         appointmentId
       },
-      doctors: [],
       message: '',
       menu: false,
       showDialog: false
     }
   },
   created () {
-    this.fetchDoctors()
     this.fetchAppointmentDetails()
   },
   methods: {
@@ -94,10 +91,11 @@ export default {
       }
       this.showDialog = true
     },
+
     async confirmUpdate () {
       this.showDialog = false
       try {
-        const response = await this.$axios.put(`/appointment/update/${this.$route.query.appointmentId}`, this.appointment)
+        const response = await this.$axios.put(`/appointment/AppointmentUpdate/${this.$route.query.appointmentId}`, this.appointment)
         console.log('Appointment updated:', response.data)
 
         this.message = 'Randevu başarıyla güncellendi!'
@@ -107,22 +105,12 @@ export default {
       }
     },
 
-    async fetchDoctors () {
-      try {
-        const response = await this.$axios.get(`/departments/${this.appointment.departmentId}/doctors`)
-        this.doctors = response.data.map(doctor => ({
-          ...doctor,
-          fullName: `${doctor.firstName} ${doctor.lastName}`
-        }))
-      } catch (error) {
-        console.error('Error fetching doctors:', error)
-      }
-    },
-
     async fetchAppointmentDetails () {
       try {
         const response = await this.$axios.get(`/appointment/${this.$route.query.appointmentId}`)
-        this.appointment = response.data
+        const appointmentData = response.data.data
+        this.appointment.date = appointmentData.date.split('T')[0]
+        this.appointment.reason = appointmentData.reason
       } catch (error) {
         console.error('Error fetching appointment details:', error)
       }
@@ -131,9 +119,9 @@ export default {
 }
 </script>
 
-  <style scoped>
-  .v-container {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  </style>
+<style scoped>
+.v-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+</style>

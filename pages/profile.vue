@@ -90,7 +90,7 @@
             required
           />
         </v-col>
-        <v-col cols="12" md="4">
+        <v-col v-if="form.role === 'Patient'" cols="12" md="4">
           <v-select
             v-model="form.gender"
             :items="genders"
@@ -113,7 +113,7 @@
             required
           />
         </v-col>
-        <v-col cols="12" md="4">
+        <v-col v-if="form.role === 'Patient'" cols="12" md="4">
           <v-select
             v-model="form.bloodType"
             :items="bloodTypes"
@@ -177,7 +177,7 @@ export default {
     async updateProfile () {
       try {
         await this.$axios.put('/auth/UpdateUser', this.form)
-        alert('Profile updated successfully')
+        alert('Profil başarıyla güncellendi')
         this.profileUpdated = true
       } catch (error) {
         console.error('Profile güncellenirken hata oluştu:', error)

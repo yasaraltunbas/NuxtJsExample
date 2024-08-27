@@ -18,3 +18,13 @@ Vue.filter('formatStatus', (value) => {
   }
   return statusMap[value] || value
 })
+
+Vue.filter('formatAdmissionStatus', (value) => {
+  const statusMap = {
+    Pending: 'Beklemede',
+    Approved: 'Onaylandı',
+    Discharged: 'Taburcu',
+    Rejected: 'Reddedildi'
+  }
+  return statusMap[value] || value
+})
