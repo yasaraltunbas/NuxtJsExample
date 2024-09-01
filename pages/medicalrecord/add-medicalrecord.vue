@@ -70,7 +70,7 @@ export default {
         console.log('medicalRecord:', this.medicalRecord)
         await this.$axios.post('/medicalrecord/AddMedicalRecord', this.medicalRecord)
         this.message = 'Tıbbi kayıt başarıyla kaydedildi!'
-        this.$router.push('/doctor/appointments/_aid')
+        this.$router.push(`/doctor/appointments/${this.medicalRecord.appointmentId}`)
       } catch (error) {
         this.message = 'Tıbbi kayıt kaydedilirken hata oluştu: ' + error.response.data.message
       }

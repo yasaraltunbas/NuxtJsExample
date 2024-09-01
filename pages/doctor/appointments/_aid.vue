@@ -20,7 +20,7 @@
                 <strong>Randevu Tarihi:</strong> {{ appointment.date | formatDate }}
               </v-list-item-subtitle>
               <v-list-item-subtitle>
-                <strong>Randevu Durumu:</strong> {{ appointment.status }}
+                <strong>Randevu Durumu:</strong> {{ appointment.status | formatStatus }}
               </v-list-item-subtitle>
               <v-list-item-subtitle>
                 <strong>Şikayet:</strong> {{ appointment.reason }}
