@@ -65,6 +65,7 @@
           />
         </v-col>
         <v-col cols="12" class="text-right">
+          <back-button-for-detail />
           <v-btn :disabled="!formValid" color="primary" type="submit">
             Randevu Al
           </v-btn>

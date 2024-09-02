@@ -38,6 +38,7 @@
     </v-alert>
     <v-row>
       <v-col cols="12" class="text-right">
+        <back-button-for-detail />
         <v-btn color="primary" @click="showDialog = true">
           Randevuyu Güncelle
         </v-btn>
@@ -64,7 +65,11 @@
 </template>
 
 <script>
+import BackButtonForDetail from '~/components/BackButtonForDetail.vue'
 export default {
+  components: {
+    BackButtonForDetail
+  },
   data () {
     const { appointmentId } = this.$route.query
 
@@ -99,7 +104,7 @@ export default {
         console.log('Appointment updated:', response.data)
 
         this.message = 'Randevu başarıyla güncellendi!'
-        this.$router.push('/getappointment')
+        this.$router.push('/patient/appointments')
       } catch (error) {
         this.message = 'Randevu güncellenirken hata oluştu: ' + error.response.data.message
       }

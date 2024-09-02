@@ -1,14 +1,15 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <v-col cols="12" md="2">
-        <h2>Hastanın Tıbbi Kayıtları</h2>
-
-        <v-list>
-          <v-list-item v-for="record in medicalRecords" :key="record.id">
+      <v-col cols="12">
+        <h2 class="text-center">
+          Hastanın Tıbbi Kayıtları
+        </h2>
+        <v-list two-line>
+          <v-list-item v-for="record in medicalRecords" :key="record.id" class="mb-4">
             <v-list-item-content>
               <v-list-item-title>
-                <strong>Tarih:</strong> {{ record.date | formatDate }} <br>
+                <strong>Tarih:</strong> {{ record.date | formatDate }}
               </v-list-item-title>
               <v-list-item-subtitle>
                 <strong>Teşhis:</strong> {{ record.diagnosis }} <br>
@@ -18,6 +19,7 @@
               </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
+          <v-divider v-if="index < medicalRecords.length - 1" :key="index" />
         </v-list>
       </v-col>
     </v-row>
@@ -27,7 +29,7 @@
 <script>
 export default {
   props: {
-    patientId: {
+    appointmentId: {
       type: String,
       required: true
     }
@@ -43,7 +45,7 @@ export default {
   methods: {
     async fetchMedicalRecords () {
       try {
-        const response = await this.$axios.get(`/medicalrecord/patient/${this.patientId}/medicalrecords`)
+        const response = await this.$axios.get(`/medicalrecord/appointment/${this.appointmentId}`)
         this.medicalRecords = response.data
       } catch (error) {
         console.error('Error fetching medical records:', error)
@@ -53,8 +55,18 @@ export default {
 }
 </script>
 
-    <style scoped>
-    .container {
-      padding: 20px;
-    }
-    </style>
+<style scoped>
+.v-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mb-4 {
+  margin-bottom: 16px;
+}
+</style>

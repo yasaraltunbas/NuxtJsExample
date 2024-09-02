@@ -93,11 +93,11 @@ export default {
       }
     },
     addMedicalRecord (patientId, appointmentId) {
-      this.$router.push({ path: '/medicalrecord/add-medicalrecord', query: { patientId, appointmentId } })
+      this.$router.push({ path: '/doctor/medical-records/create', query: { patientId, appointmentId } })
     },
     goToAddAdmission (patientId, appointmentId) {
       this.$router.push({
-        path: '/admission/add-admission',
+        path: '/doctor/admissions/create',
         query: { patientId, appointmentId }
       })
     }

@@ -14,7 +14,7 @@
                 <strong>Bölüm:</strong> {{ appointment.departmentName }}
               </v-list-item-title>
               <v-list-item-subtitle>
-                <strong>Hasta Adı:</strong> {{ appointment.patientName }}
+                <strong>Doktor Adı:</strong> {{ appointment.doctorName }}
               </v-list-item-subtitle>
               <v-list-item-subtitle>
                 <strong>Randevu Tarihi:</strong> {{ appointment.date | formatDate }}
@@ -28,7 +28,7 @@
             </v-list-item-content>
           </v-list-item>
         </v-list>
-        <GetMedicalRecordForPatient :patient-id="appointment.patientId" />
+        <GetMedicalRecordForPatient :appointment-id="appointment.id" />
       </v-col>
     </v-row>
     <v-row v-else>
@@ -53,9 +53,22 @@ export default {
     }
   },
   created () {
+    this.fetchData()
     this.fetchAppointmentDetails()
   },
   methods: {
+    async fetchData () {
+      const appointmentId = this.$route.params.aid
+
+      try {
+        const response = await this.$axios.get(`/medicalrecord/appointment/${appointmentId}`)
+        console.log('API Response:', response.data)
+        this.medicalRecords = response.data || []
+        console.log('Medical Records:', this.medicalRecords)
+      } catch (error) {
+        console.error('Veriler alınırken hata oluştu:', error)
+      }
+    },
     async fetchAppointmentDetails () {
       const appointmentId = this.$route.params.aid
       try {
@@ -68,16 +81,8 @@ export default {
       } catch (error) {
         console.error('Bir hata oluştu:', error)
       }
-    },
-    addMedicalRecord (patientId, appointmentId) {
-      this.$router.push({ path: '/medicalrecord/add-medicalrecord', query: { patientId, appointmentId } })
-    },
-    goToAddAdmission (patientId, appointmentId) {
-      this.$router.push({
-        path: '/admission/add-admission',
-        query: { patientId, appointmentId }
-      })
     }
+
   }
 }
 

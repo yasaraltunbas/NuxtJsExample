@@ -34,7 +34,7 @@
               <td>{{ appointment.fee }}</td>
               <td>{{ appointment.status | formatStatus }}</td>
               <td>
-                <v-btn color="primary" @click="goToDetails(appointment)">
+                <v-btn color="primary" @click="goToDetails(appointment.id)">
                   Detay
                 </v-btn>
               </td>
@@ -71,10 +71,11 @@ export default {
         console.error('Error fetching appointments:', error)
       }
     },
-    goToDetails (appointment) {
-      this.$router.push({ path: '/medicalrecord/get-ex-medicalrecord', query: { appointmentId: appointment.id } })
+    goToDetails (appointmentId) {
+      this.$router.push({ path: `/patient/appointments/${appointmentId}` })
     }
-
   }
+
 }
+
 </script>

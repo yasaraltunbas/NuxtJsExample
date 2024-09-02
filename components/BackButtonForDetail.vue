@@ -8,16 +8,9 @@
 export default {
   name: 'BackButtonForDetail',
 
-  data () {
-    const { appointmentId } = this.$route.query
-
-    return {
-      appointmentId
-    }
-  },
   methods: {
     goBack () {
-      this.$router.push(`/doctor/appointments/${this.appointmentId}`)
+      this.$router.go(-1)
     }
   }
 }

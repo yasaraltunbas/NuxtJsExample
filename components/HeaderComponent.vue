@@ -23,46 +23,6 @@
                 </v-icon>
                 {{ menuItem.title }}
               </v-btn>
-
-              <template v-if="false">
-                <v-btn v-if="userRole === 'Patient'" text to="/departments" class="menu-item">
-                  <v-icon left>
-                    mdi-hospital-building
-                  </v-icon>
-                  Bölümler
-                </v-btn>
-                <v-btn text to="/appointment/getappointment" class="menu-item">
-                  <v-icon left>
-                    mdi-calendar-check
-                  </v-icon>
-                  Randevularım
-                </v-btn>
-                <v-btn v-if="userRole === 'Patient'" text to="/appointment/get-ex-appointment" class="menu-item">
-                  <v-icon left>
-                    mdi-calendar-clock
-                  </v-icon>
-                  Geçmiş Randevularım
-                </v-btn>
-
-                <v-btn v-if="userRole === 'Doctor'" text to="/admission/get-admission-doctor" class="menu-item">
-                  <v-icon left>
-                    mdi-calendar-clock
-                  </v-icon>
-                  Yatışta Olan Hastalarınız
-                </v-btn>
-                <v-btn v-if="userRole === 'Patient'" text to="/admission/get-admission-patient" class="menu-item">
-                  <v-icon left>
-                    mdi-calendar-clock
-                  </v-icon>
-                  Yatış Bilgileriniz
-                </v-btn>
-                <v-btn text to="/profile" class="menu-item">
-                  <v-icon left>
-                    mdi-account
-                  </v-icon>
-                  Profiliniz
-                </v-btn>
-              </template>
             </v-toolbar-items>
           </v-col>
           <span>
@@ -111,8 +71,6 @@ export default {
       if (!this.userRole) {
         return []
       }
-
-      // return this.userRole === 'Doctor' ? this.doctorMenuItems : this.patientMenuItems
 
       return {
         Doctor: this.doctorMenuItems,
