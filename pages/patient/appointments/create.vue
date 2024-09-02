@@ -109,7 +109,7 @@ export default {
         console.log('Appointment created:', response.data)
 
         this.message = 'Randevu başarıyla oluşturuldu!'
-        this.$router.push('/appointment/getappointment')
+        this.$router.push('/patient/appointments')
       } catch (error) {
         this.message = 'Randevu oluşturulurken hata oluştu: ' + error.response.data.message
       }
@@ -129,16 +129,16 @@ export default {
 
     validateForm () {
       this.formValid = this.appointment.doctorId !== null &&
-                       this.appointment.date !== null &&
-                       this.appointment.reason.trim() !== ''
+                         this.appointment.date !== null &&
+                         this.appointment.reason.trim() !== ''
     }
   }
 }
 </script>
 
-<style scoped>
-.v-container {
-  max-width: 800px;
-  margin: 0 auto;
-}
-</style>
+  <style scoped>
+  .v-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  </style>

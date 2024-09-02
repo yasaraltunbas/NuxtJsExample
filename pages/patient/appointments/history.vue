@@ -32,7 +32,7 @@
               <td>{{ appointment.doctorName }}</td>
               <td>{{ appointment.departmentName }}</td>
               <td>{{ appointment.fee }}</td>
-              <td>{{ translateStatus(appointment.status) }}</td>
+              <td>{{ appointment.status | formatStatus }}</td>
               <td>
                 <v-btn color="primary" @click="goToDetails(appointment)">
                   Detay
@@ -73,16 +73,8 @@ export default {
     },
     goToDetails (appointment) {
       this.$router.push({ path: '/medicalrecord/get-ex-medicalrecord', query: { appointmentId: appointment.id } })
-    },
-    translateStatus (status) {
-      const statusMap = {
-        Pending: 'Beklemede',
-        Approved: 'Onaylandı',
-        Completed: 'Tamamlandı',
-        Rejected: 'Reddedildi'
-      }
-      return statusMap[status] || status
     }
+
   }
 }
 </script>

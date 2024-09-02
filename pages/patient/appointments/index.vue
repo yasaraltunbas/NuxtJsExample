@@ -1,24 +1,18 @@
 <template>
   <v-container>
-    <v-row justify="center">
-      <v-col cols="8" md="4">
-        <PatientAppointment v-if="role === 'Patient'" :user-appointments="userAppointments" />
-        <DoctorAppointment v-else-if="role === 'Doctor'" :user-appointments="userAppointments" />
+    <v-row>
+      <v-col>
+        <PatientAppointment :user-appointments="userAppointments" />
       </v-col>
     </v-row>
   </v-container>
 </template>
-
 <script>
-import PatientAppointment from '../../components/PatientAppointment.vue'
-import DoctorAppointment from '../../components/DoctorAppointment.vue'
-
+import PatientAppointment from '~/components/PatientAppointment.vue'
 export default {
   components: {
-    PatientAppointment,
-    DoctorAppointment
+    PatientAppointment
   },
-
   data () {
     return {
       userAppointments: [],
@@ -46,8 +40,7 @@ export default {
     },
     async fetchUserAppointments () {
       try {
-        const endpoint = this.role === 'Doctor' ? '/doctor/appointments' : '/patient/appointments'
-        const response = await this.$axios.get(endpoint)
+        const response = await this.$axios.get('/patient/appointments')
         this.upcomingAppointments = response.data.sort((a, b) => new Date(a.date) - new Date(b.date))
 
         this.userAppointments = response.data.map((appointment) => {
@@ -62,4 +55,5 @@ export default {
 
   }
 }
+
 </script>

@@ -72,13 +72,13 @@ export default {
 }
 </script>
 
-<style scoped>
+  <style scoped>
 
-.simple-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.v-btn {
-  margin: 0;
-}
-</style>
+  .simple-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .v-btn {
+    margin: 0;
+  }
+  </style>

@@ -59,7 +59,7 @@ export default {
     },
     makeAppointment (department) {
       this.$router.push({
-        path: '/appointment/appointment',
+        path: '/patient/appointments/create',
         query: {
           departmentId: department.id,
           departmentName: department.departmentName
@@ -70,9 +70,9 @@ export default {
 }
 </script>
 
-  <style scoped>
-  .elevation-1 {
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  }
+    <style scoped>
+    .elevation-1 {
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    }
 
-  </style>
+    </style>

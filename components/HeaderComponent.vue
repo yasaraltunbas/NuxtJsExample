@@ -16,43 +16,53 @@
                 </v-icon>
                 Ana Sayfa
               </v-btn>
-              <v-btn v-if="userRole === 'Patient'" text to="/departments" class="menu-item">
+
+              <v-btn v-for="(menuItem, $index) in menuItems" :key="$index" text :to="menuItem.to" class="menu-item">
                 <v-icon left>
-                  mdi-hospital-building
+                  {{ menuItem.icon }}
                 </v-icon>
-                Bölümler
-              </v-btn>
-              <v-btn text to="/appointment/getappointment" class="menu-item">
-                <v-icon left>
-                  mdi-calendar-check
-                </v-icon>
-                Randevularım
-              </v-btn>
-              <v-btn v-if="userRole === 'Patient'" text to="/appointment/get-ex-appointment" class="menu-item">
-                <v-icon left>
-                  mdi-calendar-clock
-                </v-icon>
-                Geçmiş Randevularım
+                {{ menuItem.title }}
               </v-btn>
 
-              <v-btn v-if="userRole === 'Doctor'" text to="/admission/get-admission-doctor" class="menu-item">
-                <v-icon left>
-                  mdi-calendar-clock
-                </v-icon>
-                Yatışta Olan Hastalarınız
-              </v-btn>
-              <v-btn v-if="userRole === 'Patient'" text to="/admission/get-admission-patient" class="menu-item">
-                <v-icon left>
-                  mdi-calendar-clock
-                </v-icon>
-                Yatış Bilgileriniz
-              </v-btn>
-              <v-btn text to="/profile" class="menu-item">
-                <v-icon left>
-                  mdi-account
-                </v-icon>
-                Profiliniz
-              </v-btn>
+              <template v-if="false">
+                <v-btn v-if="userRole === 'Patient'" text to="/departments" class="menu-item">
+                  <v-icon left>
+                    mdi-hospital-building
+                  </v-icon>
+                  Bölümler
+                </v-btn>
+                <v-btn text to="/appointment/getappointment" class="menu-item">
+                  <v-icon left>
+                    mdi-calendar-check
+                  </v-icon>
+                  Randevularım
+                </v-btn>
+                <v-btn v-if="userRole === 'Patient'" text to="/appointment/get-ex-appointment" class="menu-item">
+                  <v-icon left>
+                    mdi-calendar-clock
+                  </v-icon>
+                  Geçmiş Randevularım
+                </v-btn>
+
+                <v-btn v-if="userRole === 'Doctor'" text to="/admission/get-admission-doctor" class="menu-item">
+                  <v-icon left>
+                    mdi-calendar-clock
+                  </v-icon>
+                  Yatışta Olan Hastalarınız
+                </v-btn>
+                <v-btn v-if="userRole === 'Patient'" text to="/admission/get-admission-patient" class="menu-item">
+                  <v-icon left>
+                    mdi-calendar-clock
+                  </v-icon>
+                  Yatış Bilgileriniz
+                </v-btn>
+                <v-btn text to="/profile" class="menu-item">
+                  <v-icon left>
+                    mdi-account
+                  </v-icon>
+                  Profiliniz
+                </v-btn>
+              </template>
             </v-toolbar-items>
           </v-col>
           <span>
@@ -78,11 +88,39 @@
 <script>
 export default {
   computed: {
-    isAuthPage () {
-      return this.$route.path === '/auth/login' || this.$route.path === '/auth/register'
-    },
     userRole () {
       return this.$auth.user ? this.$auth.user.role : null
+    },
+    doctorMenuItems () {
+      return [
+        { title: 'Randevular', to: '/doctor/appointments', icon: 'mdi-calendar-clock' },
+        { title: 'Yatışta Olan Hastalar', to: '/doctor/admissions', icon: 'mdi-calendar-clock' },
+        { title: 'Profil', to: '/profile', icon: 'mdi-account' }
+      ]
+    },
+    patientMenuItems () {
+      return [
+        { title: 'Bölümler', to: '/patient/departments', icon: 'mdi-hospital-building' },
+        { title: 'Randevular', to: '/patient/appointments', icon: 'mdi-calendar-check' },
+        { title: 'Geçmiş Randevular', to: '/patient/appointments/history', icon: 'mdi-calendar-clock' },
+        { title: 'Yatış Bilgileri', to: '/patient/admissions', icon: 'mdi-calendar-clock' },
+        { title: 'Profil', to: '/profile', icon: 'mdi-account' }
+      ]
+    },
+    menuItems () {
+      if (!this.userRole) {
+        return []
+      }
+
+      // return this.userRole === 'Doctor' ? this.doctorMenuItems : this.patientMenuItems
+
+      return {
+        Doctor: this.doctorMenuItems,
+        Patient: this.patientMenuItems
+      }[this.userRole]
+    },
+    isAuthPage () {
+      return this.$route.path === '/auth/login' || this.$route.path === '/auth/register'
     }
   },
   methods: {

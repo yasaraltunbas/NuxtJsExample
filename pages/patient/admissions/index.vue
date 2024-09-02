@@ -54,9 +54,9 @@ export default {
 }
 </script>
 
-<style>
-.simple-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-</style>
+  <style>
+  .simple-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  </style>

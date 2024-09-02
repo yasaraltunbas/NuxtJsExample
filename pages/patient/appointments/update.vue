@@ -119,9 +119,9 @@ export default {
 }
 </script>
 
-<style scoped>
-.v-container {
-  max-width: 800px;
-  margin: 0 auto;
-}
-</style>
+  <style scoped>
+  .v-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  </style>

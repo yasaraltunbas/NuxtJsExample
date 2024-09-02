@@ -76,15 +76,8 @@ export default {
       } catch (error) {
         console.error('Bir hata oluştu:', error)
       }
-    },
-    translateStatus (status) {
-      const statusMap = {
-        pending: 'Beklemede',
-        confirmed: 'Onaylandı',
-        cancelled: 'İptal Edildi'
-      }
-      return statusMap[status] || status
     }
+
   }
 }
 </script>

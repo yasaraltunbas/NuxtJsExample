@@ -12,7 +12,7 @@ export default {
     const { appointmentId } = this.$route.query
 
     return {
-      appointmentId // appointmentId'yi doğrudan data'da sakla
+      appointmentId
     }
   },
   methods: {

@@ -20,6 +20,7 @@
             <strong>Şikayet:</strong> {{ appointment.reason }}
           </v-list-item-subtitle>
         </v-list-item-content>
+
         <v-list-item-action>
           <v-btn class="ma-2" block outlined color="primary" @click="onUpdated(appointment)">
             Randevunu güncelle
@@ -74,7 +75,7 @@ export default {
     onUpdated (appointment) {
       console.log('departmentId: ', appointment.department.id)
       this.$router.push({
-        path: '/appointment/appointment-update',
+        path: '/patient/appointments/update',
         query: {
           appointmentId: appointment.id,
           departmentId: appointment.department.id
@@ -101,6 +102,7 @@ export default {
           })
       }
     }
+
   }
 }
 </script>
