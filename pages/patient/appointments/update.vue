@@ -66,6 +66,7 @@
 
 <script>
 import BackButtonForDetail from '~/components/BackButtonForDetail.vue'
+
 export default {
   components: {
     BackButtonForDetail
@@ -85,8 +86,15 @@ export default {
       showDialog: false
     }
   },
-  created () {
-    this.fetchAppointmentDetails()
+  async fetch () {
+    try {
+      const response = await this.$axios.get(`/appointment/${this.$route.query.appointmentId}`)
+      const appointmentData = response.data.data
+      this.appointment.date = appointmentData.date.split('T')[0]
+      this.appointment.reason = appointmentData.reason
+    } catch (error) {
+      console.error('Error fetching appointment details:', error)
+    }
   },
   methods: {
     updateAppointment () {
@@ -107,17 +115,6 @@ export default {
         this.$router.push('/patient/appointments')
       } catch (error) {
         this.message = 'Randevu güncellenirken hata oluştu: ' + error.response.data.message
-      }
-    },
-
-    async fetchAppointmentDetails () {
-      try {
-        const response = await this.$axios.get(`/appointment/${this.$route.query.appointmentId}`)
-        const appointmentData = response.data.data
-        this.appointment.date = appointmentData.date.split('T')[0]
-        this.appointment.reason = appointmentData.reason
-      } catch (error) {
-        console.error('Error fetching appointment details:', error)
       }
     }
   }

@@ -60,24 +60,17 @@ export default {
       appointments: []
     }
   },
-  created () {
-    console.log('Patient ID:', this.patientId)
-    this.fetchAppointments()
-  },
-  methods: {
-    async fetchAppointments () {
-      try {
-        const response = await this.$axios.get(`patient/${this.patientId}/appointments`)
-        if (response.status === 200) {
-          this.appointments = response.data.sort((a, b) => new Date(a.date) - new Date(b.date))
-        } else {
-          console.error('Randevu bilgisi alınamadı.')
-        }
-      } catch (error) {
-        console.error('Bir hata oluştu:', error)
+  async fetch () {
+    try {
+      const response = await this.$axios.get(`patient/${this.patientId}/appointments`)
+      if (response.status === 200) {
+        this.appointments = response.data.sort((a, b) => new Date(a.date) - new Date(b.date))
+      } else {
+        console.error('Randevu bilgisi alınamadı.')
       }
+    } catch (error) {
+      console.error('Bir hata oluştu:', error)
     }
-
   }
 }
 </script>

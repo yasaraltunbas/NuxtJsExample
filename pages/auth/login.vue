@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <v-col cols="12" md="4">
+      <v-col cols="12" sm="8" md="6" lg="4">
         <v-card class="login-card">
           <v-card-title>
             <span class="headline">Giriş Yap</span>
@@ -84,11 +84,13 @@ export default {
 .headline {
   font-weight: bold;
 }
+
 .register-link {
 
   color: #1976D2;
 }
+
 .login-card {
-  margin-top: 350px;
+  margin-top: 15vh;
 }
 </style>

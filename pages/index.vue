@@ -22,17 +22,13 @@ export default {
       role: ''
     }
   },
-  created () {
-    this.fetchUserRole()
-  },
-  methods: {
-    async fetchUserRole () {
-      try {
-        const response = await this.$axios.get('/auth/user')
-        this.role = response.data.role
-      } catch (error) {
-        console.error('Error fetching user role:', error)
-      }
+
+  async fetch () {
+    try {
+      const userRoleResponse = await this.$axios.get('/auth/user')
+      this.role = userRoleResponse.data.role
+    } catch (error) {
+      console.error('Veriler alınırken hata oluştu:', error)
     }
   }
 }

@@ -46,20 +46,17 @@ export default {
       admissions: []
     }
   },
-  created () {
-    this.fetchPatients()
+
+  async fetch () {
+    try {
+      const admissionsResponse = await this.$axios.get('/doctor/admissions')
+      this.admissions = admissionsResponse.data.sort((a, b) => new Date(b.date) - new Date(a.date))
+    } catch (error) {
+      console.error('Error fetching patients:', error)
+    }
   },
   methods: {
-    async fetchPatients () {
-      try {
-        const response = await this.$axios.get('/doctor/admissions')
-        this.admissions = response.data.sort((a, b) => new Date(a.date) - new Date(b.date))
 
-        this.admissions = response.data
-      } catch (error) {
-        console.error('Error fetching patients:', error)
-      }
-    },
     async dischargePatient (admissionId) {
       try {
         await this.$axios.delete(`/admission/discharge/${admissionId}`)

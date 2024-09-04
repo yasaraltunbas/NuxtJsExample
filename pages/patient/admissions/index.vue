@@ -37,20 +37,16 @@ export default {
       admissions: []
     }
   },
-  created () {
-    this.fetchPatients()
-  },
-  methods: {
-    async fetchPatients () {
-      try {
-        const response = await this.$axios.get('/patient/admissions')
-        this.admissions = response.data.sort((a, b) => new Date(a.date) - new Date(b.date))
-        this.admissions = response.data
-      } catch (error) {
-        console.error('Error fetching patients:', error)
-      }
+
+  async fetch () {
+    try {
+      const admissionsResponse = await this.$axios.get('/patient/admissions')
+      this.admissions = admissionsResponse.data.sort((a, b) => new Date(b.date) - new Date(a.date))
+    } catch (error) {
+      console.error('Veriler alınırken hata oluştu:', error)
     }
   }
+
 }
 </script>
 

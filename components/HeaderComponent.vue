@@ -1,48 +1,43 @@
 <template>
-  <v-container fluid>
-    <v-app>
-      <v-app-bar v-if="!isAuthPage" app color="primary" dark>
-        <v-row align="center" justify="center" class="app-row">
-          <v-col cols="auto">
-            <v-toolbar-title class="title-hospital">
-              Hastane App
-            </v-toolbar-title>
-          </v-col>
-          <v-col cols="auto">
-            <v-toolbar-items class="toolbar-items">
-              <v-btn text to="/" class="menu-item">
-                <v-icon left>
-                  mdi-home
-                </v-icon>
-                Ana Sayfa
-              </v-btn>
+  <v-app>
+    <v-card color="primary">
+      <v-container class="py-0 my-0">
+        <v-app-bar v-if="!isAuthPage" color="primary" dark flat>
+          <v-app-bar-title class="title-hospital">
+            Hastane App
+          </v-app-bar-title>
 
-              <v-btn v-for="(menuItem, $index) in menuItems" :key="$index" text :to="menuItem.to" class="menu-item">
-                <v-icon left>
-                  {{ menuItem.icon }}
-                </v-icon>
-                {{ menuItem.title }}
-              </v-btn>
-            </v-toolbar-items>
-          </v-col>
-          <span>
-            {{ userRole === 'Doctor' ? 'Doktor' : 'Hasta' }}
-          </span>
-          <v-col cols="auto">
+          <v-spacer />
+
+          <template v-if="$vuetify.breakpoint.lgAndUp">
+            <v-btn v-for="(menuItem, $index) in menuItems" :key="$index" text :to="menuItem.to" class="menu-item">
+              <v-icon left>
+                {{ menuItem.icon }}
+              </v-icon>
+              {{ menuItem.title }}
+            </v-btn>
+
+            <span>
+              {{ userRole === 'Doctor' ? 'Doktor' : 'Hasta' }}
+            </span>
+
             <v-btn color="grey" class="btn-out" @click="logout">
               <v-icon left>
                 mdi-logout
               </v-icon>
             </v-btn>
-          </v-col>
-        </v-row>
-      </v-app-bar>
+          </template>
+          <template v-else>
+            mobil menu gelmesi lazım
+          </template>
+        </v-app-bar>
+      </v-container>
+    </v-card>
 
-      <v-main>
-        <nuxt />
-      </v-main>
-    </v-app>
-  </v-container>
+    <v-main>
+      <nuxt />
+    </v-main>
+  </v-app>
 </template>
 
 <script>
@@ -72,10 +67,15 @@ export default {
         return []
       }
 
-      return {
+      const menuItems = {
         Doctor: this.doctorMenuItems,
         Patient: this.patientMenuItems
       }[this.userRole]
+
+      return [
+        { title: 'Anasayfa', to: '/', icon: 'mdi-home' },
+        ...menuItems
+      ]
     },
     isAuthPage () {
       return this.$route.path === '/auth/login' || this.$route.path === '/auth/register'

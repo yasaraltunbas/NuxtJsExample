@@ -1,38 +1,18 @@
 <template>
   <v-container>
     <v-col cols="12">
-      <v-simple-table height="530px">
-        <template #default>
-          <thead>
-            <tr>
-              <th class="text-left">
-                Bölüm
-              </th>
-              <th class="text-left">
-                Konum
-              </th>
-              <th class="text-left">
-                Ücret
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="item in departments"
-              :key="item.id"
-            >
-              <td>{{ item.departmentName }}</td>
-              <td>{{ item.location }}</td>
-              <td>{{ item.fee }}</td>
-              <td align="right">
-                <v-btn color="primary" class="btn" @click="makeAppointment(item)">
-                  Randevu Al
-                </v-btn>
-              </td>
-            </tr>
-          </tbody>
+      <v-data-table
+        :headers="headers"
+        :items="departments"
+        :items-per-page="5"
+        class="elevation-1"
+      >
+        <template #item.action="{ item }">
+          <v-btn color="primary" class="btn" @click="makeAppointment(item)">
+            Randevu Al
+          </v-btn>
         </template>
-      </v-simple-table>
+      </v-data-table>
     </v-col>
   </v-container>
 </template>
@@ -42,21 +22,24 @@ export default {
   name: 'DepartmentPage',
   data () {
     return {
-
-      departments: []
+      departments: [],
+      headers: [
+        { text: 'Bölüm', value: 'departmentName', align: 'start' },
+        { text: 'Konum', value: 'location' },
+        { text: 'Ücret', value: 'fee' },
+        { text: 'İşlem', value: 'action', sortable: false, width: '100px' }
+      ]
     }
   },
-  fetch () {
-    return this.fetchDepartment()
+  async fetch () {
+    try {
+      const response = await this.$axios.$get('/departments/all')
+      this.departments = response.data
+    } catch (error) {
+      console.error('Error fetching departments:', error)
+    }
   },
   methods: {
-    fetchDepartment () {
-      return this.$axios.$get('/departments/all')
-        .then((response) => {
-          this.departments = response.data
-          return response
-        })
-    },
     makeAppointment (department) {
       this.$router.push({
         path: '/patient/appointments/create',
@@ -70,9 +53,8 @@ export default {
 }
 </script>
 
-    <style scoped>
-    .elevation-1 {
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    }
-
-    </style>
+<style scoped>
+.elevation-1 {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+</style>

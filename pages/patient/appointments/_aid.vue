@@ -49,41 +49,23 @@ export default {
   },
   data () {
     return {
-      appointment: null
+      appointment: null,
+      medicalRecords: []
     }
   },
-  created () {
-    this.fetchData()
-    this.fetchAppointmentDetails()
-  },
-  methods: {
-    async fetchData () {
-      const appointmentId = this.$route.params.aid
+  async fetch () {
+    const appointmentId = this.$route.params.aid
 
-      try {
-        const response = await this.$axios.get(`/medicalrecord/appointment/${appointmentId}`)
-        console.log('API Response:', response.data)
-        this.medicalRecords = response.data || []
-        console.log('Medical Records:', this.medicalRecords)
-      } catch (error) {
-        console.error('Veriler alınırken hata oluştu:', error)
-      }
-    },
-    async fetchAppointmentDetails () {
-      const appointmentId = this.$route.params.aid
-      try {
-        const response = await this.$axios.get(`/appointment/detail/${appointmentId}`)
-        if (response.status === 200) {
-          this.appointment = response.data
-        } else {
-          console.error('Randevu bilgisi alınamadı.')
-        }
-      } catch (error) {
-        console.error('Bir hata oluştu:', error)
-      }
+    try {
+      const [medicalRecordsResponse, appointmentDetailsResponse] = await Promise.all([
+        this.$axios.get(`/medicalrecord/appointment/${appointmentId}`),
+        this.$axios.get(`/appointment/detail/${appointmentId}`)
+      ])
+
+      this.medicalRecords = medicalRecordsResponse.data || []
+      this.appointment = appointmentDetailsResponse.data
+    } catch (error) {
     }
-
   }
 }
-
 </script>

@@ -95,8 +95,17 @@ export default {
       menu: false
     }
   },
-  created () {
-    this.fetchDoctors()
+
+  async fetch () {
+    try {
+      const response = await this.$axios.get(`/departments/${this.appointment.departmentId}/doctors`)
+      this.doctors = response.data.map(doctor => ({
+        ...doctor,
+        fullName: `${doctor.firstName} ${doctor.lastName}`
+      }))
+    } catch (error) {
+      console.error('Error fetching doctors:', error)
+    }
   },
   methods: {
     async createAppointment () {
@@ -113,18 +122,6 @@ export default {
         this.$router.push('/patient/appointments')
       } catch (error) {
         this.message = 'Randevu oluşturulurken hata oluştu: ' + error.response.data.message
-      }
-    },
-
-    async fetchDoctors () {
-      try {
-        const response = await this.$axios.get(`/departments/${this.appointment.departmentId}/doctors`)
-        this.doctors = response.data.map(doctor => ({
-          ...doctor,
-          fullName: `${doctor.firstName} ${doctor.lastName}`
-        }))
-      } catch (error) {
-        console.error('Error fetching doctors:', error)
       }
     },
 

@@ -56,26 +56,19 @@ export default {
       appointments: []
     }
   },
-  created () {
-    this.fetchAppointments()
+  async fetch () {
+    try {
+      const response = await this.$axios.get('/patient/exappointment')
+      this.appointments = response.data.sort((a, b) => new Date(a.date) - new Date(b.date))
+      console.log('Appointments:', this.appointments)
+    } catch (error) {
+      console.error('Error fetching appointments:', error)
+    }
   },
   methods: {
-    async fetchAppointments () {
-      try {
-        const response = await this.$axios.get('/patient/exappointment')
-        this.upcomingAppointments = response.data.sort((a, b) => new Date(a.date) - new Date(b.date))
-
-        this.appointments = response.data
-        console.log('Appointments:', this.appointments)
-      } catch (error) {
-        console.error('Error fetching appointments:', error)
-      }
-    },
     goToDetails (appointmentId) {
       this.$router.push({ path: `/patient/appointments/${appointmentId}` })
     }
   }
-
 }
-
 </script>

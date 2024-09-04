@@ -21,39 +21,19 @@ export default {
 
     }
   },
-  created () {
-    this.fetchUserRole()
-      .then(() => {
-        this.fetchUserAppointments()
-      })
-  },
-  methods: {
-    async fetchUserRole () {
-      try {
-        const response = await this.$axios.get('/auth/user')
-        const role = response.data.role
-        this.role = role
-        return role
-      } catch (error) {
-        console.error('Error fetching user role:', error)
-      }
-    },
-    async fetchUserAppointments () {
-      try {
-        const response = await this.$axios.get('/doctor/appointments')
-        this.upcomingAppointments = response.data.sort((a, b) => new Date(a.date) - new Date(b.date))
 
-        this.userAppointments = response.data.map((appointment) => {
-          return {
-            ...appointment
-          }
-        })
-      } catch (error) {
-        console.error('Error fetching user appointments:', error)
-      }
+  async fetch () {
+    try {
+      const userRoleResponse = await this.$axios.get('/auth/user')
+      this.role = userRoleResponse.data.role
+
+      const userAppointmentsResponse = await this.$axios.get('/doctor/appointments')
+      this.userAppointments = userAppointmentsResponse.data.sort((a, b) => new Date(a.date) - new Date(b.date))
+    } catch (error) {
+      console.error('Error fetching data:', error)
     }
-
   }
+
 }
 
 </script>

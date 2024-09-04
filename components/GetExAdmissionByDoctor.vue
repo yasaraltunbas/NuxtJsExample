@@ -62,31 +62,16 @@ export default {
       pastAdmissions: []
     }
   },
-  created () {
-    this.fetchPastAdmissions()
-  },
-  methods: {
-    async fetchPastAdmissions () {
-      try {
-        const response = await this.$axios.get(`/admission/ex-admission/${this.patientId}`)
-        if (response.status === 200) {
-          this.pastAdmissions = response.data.sort((a, b) => new Date(a.date) - new Date(b.date))
-        } else {
-          console.error('Yatış bilgisi alınamadı.')
-        }
-      } catch (error) {
-        console.error('Bir hata oluştu:', error)
-      }
-    },
-    formatStatus (status) {
-      const statusMap = {
-        pending: 'Beklemede',
-        confirmed: 'Onaylandı',
-        cancelled: 'İptal Edildi'
-      }
-      return statusMap[status] || status
+
+  async fetch () {
+    const response = await this.$axios.get(`/admission/ex-admission/${this.patientId}`)
+    if (response.status === 200) {
+      this.pastAdmissions = response.data.sort((a, b) => new Date(a.date) - new Date(b.date))
+    } else {
+      console.error('Yatış bilgisi alınamadı.')
     }
   }
+
 }
 </script>
 

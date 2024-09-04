@@ -165,7 +165,7 @@ export default {
       ]
     }
   },
-  async mounted () {
+  async fetch () {
     try {
       const response = await this.$axios.get('/auth/user')
       this.form = response.data

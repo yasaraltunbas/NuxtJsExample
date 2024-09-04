@@ -75,23 +75,20 @@ export default {
       appointment: null
     }
   },
-  created () {
-    this.fetchAppointmentDetails()
+  async fetch () {
+    const appointmentId = this.$route.params.aid
+    try {
+      const response = await this.$axios.get(`/appointment/detail/${appointmentId}`)
+      if (response.status === 200) {
+        this.appointment = response.data
+      } else {
+        console.error('Randevu bilgisi alınamadı.')
+      }
+    } catch (error) {
+      console.error('Bir hata oluştu:', error)
+    }
   },
   methods: {
-    async fetchAppointmentDetails () {
-      const appointmentId = this.$route.params.aid
-      try {
-        const response = await this.$axios.get(`/appointment/detail/${appointmentId}`)
-        if (response.status === 200) {
-          this.appointment = response.data
-        } else {
-          console.error('Randevu bilgisi alınamadı.')
-        }
-      } catch (error) {
-        console.error('Bir hata oluştu:', error)
-      }
-    },
     addMedicalRecord (patientId, appointmentId) {
       this.$router.push({ path: '/doctor/medical-records/create', query: { patientId, appointmentId } })
     },

@@ -66,24 +66,20 @@ export default {
       medicalRecords: []
     }
   },
-  created () {
-    console.log('Patient ID:', this.patientId)
-    this.fetchMedicalRecords()
-  },
-  methods: {
-    async fetchMedicalRecords () {
-      try {
-        const response = await this.$axios.get(`patient/${this.patientId}/exmedicalrecord`)
-        if (response.status === 200) {
-          this.medicalRecords = response.data
-        } else {
-          console.error('Medical records could not be retrieved.')
-        }
-      } catch (error) {
-        console.error('An error occurred:', error)
+
+  async fetch () {
+    try {
+      const response = await this.$axios.get(`patient/${this.patientId}/exmedicalrecord`)
+      if (response.status === 200) {
+        this.medicalRecords = response.data
+      } else {
+        console.error('Medical records could not be retrieved.')
       }
+    } catch (error) {
+      console.error('An error occurred:', error)
     }
   }
+
 }
 </script>
 
