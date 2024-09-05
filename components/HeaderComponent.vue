@@ -9,7 +9,7 @@
 
           <v-spacer />
 
-          <template v-if="$vuetify.breakpoint.lgAndUp">
+          <template v-if="$vuetify.breakpoint.lgAndDown">
             <v-btn v-for="(menuItem, $index) in menuItems" :key="$index" text :to="menuItem.to" class="menu-item">
               <v-icon left>
                 {{ menuItem.icon }}
