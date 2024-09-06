@@ -3,37 +3,28 @@
     <v-row justify="center">
       <v-col cols="12" md="8">
         <h2>Yatış İşlemi Olan Hastalar</h2>
-        <v-simple-table v-if="admissions.length" class="simple-table">
-          <thead>
-            <tr>
-              <th class="text-left">
-                Hasta Adı
-              </th>
-              <th class="text-left">
-                Yatış Tarihi
-              </th>
-              <th class="text-left">
-                Sebep
-              </th>
-              <th class="text-left">
-                Durum
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="admission in admissions" :key="admission.id">
-              <td>{{ admission.patientName }}</td>
-              <td>{{ admission.date | formatDate }}</td>
-              <td>{{ admission.reason }}</td>
-              <td>{{ admission.status }}</td>
-              <td>
-                <v-btn color="red" @click="dischargePatient(admission.id)">
-                  Taburcu Et
-                </v-btn>
-              </td>
-            </tr>
-          </tbody>
-        </v-simple-table>
+        <v-data-table
+          v-if="admissions.length"
+          :headers="headers"
+          :items="admissions"
+          :items-per-page="5"
+          class="elevation-1"
+        >
+          <template #item.date="{ item }">
+            {{ item.date | formatDate }}
+          </template>
+          <template #item.status="{ item }">
+            {{ item.status }}
+          </template>
+          <template #item.action="{ item }">
+            <v-btn color="red" @click="dischargePatient(item.id)">
+              Taburcu Et
+            </v-btn>
+          </template>
+        </v-data-table>
+        <v-alert v-else type="info">
+          Yatış işlemi olan hastalar bulunmamaktadır.
+        </v-alert>
       </v-col>
     </v-row>
   </v-container>
@@ -43,7 +34,14 @@
 export default {
   data () {
     return {
-      admissions: []
+      admissions: [],
+      headers: [
+        { text: 'Hasta Adı', value: 'patientName', align: 'start' },
+        { text: 'Yatış Tarihi', value: 'date' },
+        { text: 'Sebep', value: 'reason' },
+        { text: 'Durum', value: 'status' },
+        { text: 'İşlem', value: 'action', sortable: false, width: '100px' }
+      ]
     }
   },
 
@@ -56,7 +54,6 @@ export default {
     }
   },
   methods: {
-
     async dischargePatient (admissionId) {
       try {
         await this.$axios.delete(`/admission/discharge/${admissionId}`)
@@ -69,13 +66,11 @@ export default {
 }
 </script>
 
-  <style scoped>
-
-  .simple-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  .v-btn {
-    margin: 0;
-  }
-  </style>
+<style scoped>
+.elevation-1 {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+.v-btn {
+  margin: 0;
+}
+</style>

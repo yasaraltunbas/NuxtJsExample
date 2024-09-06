@@ -9,7 +9,7 @@
 
           <v-spacer />
 
-          <template v-if="$vuetify.breakpoint.lgAndDown">
+          <template v-if="$vuetify.breakpoint.mdAndUp">
             <v-btn v-for="(menuItem, $index) in menuItems" :key="$index" text :to="menuItem.to" class="menu-item">
               <v-icon left>
                 {{ menuItem.icon }}
@@ -28,7 +28,30 @@
             </v-btn>
           </template>
           <template v-else>
-            mobil menu gelmesi lazım
+            <v-btn icon @click.stop="drawer = !drawer">
+              <v-icon>mdi-menu</v-icon>
+            </v-btn>
+            <v-navigation-drawer v-model="drawer" app absolute temporary>
+              <v-list>
+                <v-list-item v-for="(menuItem, $index) in menuItems" :key="$index" nav dense :to="menuItem.to">
+                  <v-list-item-icon>
+                    <v-icon>{{ menuItem.icon }}</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title>{{ menuItem.title }}</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+              <v-divider />
+              <v-list-item @click="logout">
+                <v-list-item-icon>
+                  <v-icon>mdi-logout</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>Çıkış Yap</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-navigation-drawer>
           </template>
         </v-app-bar>
       </v-container>
@@ -42,6 +65,11 @@
 
 <script>
 export default {
+  data () {
+    return {
+      drawer: false
+    }
+  },
   computed: {
     userRole () {
       return this.$auth.user ? this.$auth.user.role : null

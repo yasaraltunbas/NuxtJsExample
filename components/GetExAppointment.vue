@@ -7,34 +7,19 @@
     </v-row>
     <v-row v-if="appointments.length">
       <v-col cols="12">
-        <v-simple-table class="ex-table">
-          <thead>
-            <tr>
-              <th class="text-left">
-                Tarih
-              </th>
-
-              <th class="text-left">
-                Bölüm
-              </th>
-
-              <th class="text-left">
-                Durum
-              </th>
-              <th class="text-left">
-                Şikayet
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="appointment in appointments" :key="appointment.id">
-              <td>{{ appointment.date | formatDate }}</td>
-              <td>{{ appointment.departmentName }}</td>
-              <td>{{ appointment.status | formatStatus }}</td>
-              <td>{{ appointment.reason }}</td>
-            </tr>
-          </tbody>
-        </v-simple-table>
+        <v-data-table
+          :headers="headers"
+          :items="appointments"
+          :items-per-page="5"
+          class="elevation-1"
+        >
+          <template #item.date="{ item }">
+            {{ item.date | formatDate }}
+          </template>
+          <template #item.status="{ item }">
+            {{ item.status | formatStatus }}
+          </template>
+        </v-data-table>
       </v-col>
     </v-row>
     <v-row v-else>
@@ -57,7 +42,13 @@ export default {
   },
   data () {
     return {
-      appointments: []
+      appointments: [],
+      headers: [
+        { text: 'Tarih', value: 'date', align: 'start' },
+        { text: 'Bölüm', value: 'departmentName' },
+        { text: 'Durum', value: 'status' },
+        { text: 'Şikayet', value: 'reason' }
+      ]
     }
   },
   async fetch () {
@@ -79,5 +70,8 @@ export default {
 .v-container {
   max-width: 800px;
   margin: 0 auto;
+}
+.elevation-1 {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 </style>

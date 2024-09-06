@@ -3,28 +3,23 @@
     <v-row justify="center">
       <v-col cols="12" md="8">
         <h2>Yatış İşlemleriniz</h2>
-        <v-simple-table v-if="admissions.length" class="simple-table">
-          <thead>
-            <tr>
-              <th class="text-left">
-                Yatış Tarihi
-              </th>
-              <th class="text-left">
-                Sebep
-              </th>
-              <th class="text-left">
-                Durum
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="admission in admissions" :key="admission.id">
-              <td>{{ admission.date | formatDate }}</td>
-              <td>{{ admission.reason }}</td>
-              <td> {{ admission.status | formatAdmissionStatus }} </td>
-            </tr>
-          </tbody>
-        </v-simple-table>
+        <v-data-table
+          v-if="admissions.length"
+          :headers="headers"
+          :items="admissions"
+          :items-per-page="5"
+          class="elevation-1"
+        >
+          <template #item.date="{ item }">
+            {{ item.date | formatDate }}
+          </template>
+          <template #item.status="{ item }">
+            {{ item.status | formatAdmissionStatus }}
+          </template>
+        </v-data-table>
+        <v-alert v-else type="info">
+          Yatış işlemleriniz bulunmamaktadır.
+        </v-alert>
       </v-col>
     </v-row>
   </v-container>
@@ -34,7 +29,12 @@
 export default {
   data () {
     return {
-      admissions: []
+      admissions: [],
+      headers: [
+        { text: 'Yatış Tarihi', value: 'date', align: 'start' },
+        { text: 'Sebep', value: 'reason' },
+        { text: 'Durum', value: 'status' }
+      ]
     }
   },
 
@@ -46,13 +46,11 @@ export default {
       console.error('Veriler alınırken hata oluştu:', error)
     }
   }
-
 }
 </script>
 
-  <style>
-  .simple-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  </style>
+<style scoped>
+.elevation-1 {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+</style>

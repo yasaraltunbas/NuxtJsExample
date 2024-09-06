@@ -5,7 +5,7 @@
         <span>&copy; 2024 Hastane App. Tüm hakları saklıdır.</span>
 
         <v-spacer />
-        
+
         <v-btn text to="/privacy-policy">
           Gizlilik Politikası
         </v-btn>
