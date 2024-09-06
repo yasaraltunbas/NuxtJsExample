@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row justify="center">
       <v-col cols="12" md="8">
-        <component :is="role === 'Patient' ? 'patient-home' : 'doctor-home'" />
+        <component :is="role === 'Patient' ? 'patient-home' : (role === 'Doctor' ? 'doctor-home': '')" />
       </v-col>
     </v-row>
   </v-container>
@@ -26,7 +26,7 @@ export default {
   async fetch () {
     try {
       const userRoleResponse = await this.$axios.get('/auth/user')
-      this.role = userRoleResponse.data.role
+      this.role = userRoleResponse.data.data.role
     } catch (error) {
       console.error('Veriler alınırken hata oluştu:', error)
     }

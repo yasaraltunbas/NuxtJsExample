@@ -55,7 +55,7 @@ export default {
     try {
       const response = await this.$axios.get(`patient/${this.patientId}/exmedicalrecord`)
       if (response.status === 200) {
-        this.medicalRecords = response.data
+        this.medicalRecords = response.data.data
       } else {
         console.error('Medical records could not be retrieved.')
       }

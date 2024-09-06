@@ -33,7 +33,7 @@ export default {
   async fetch () {
     try {
       const response = await this.$axios.get('/appointment/patientcurrentweek')
-      this.upcomingAppointments = response.data.sort((a, b) => new Date(a.date) - new Date(b.date))
+      this.upcomingAppointments = response.data.data.sort((a, b) => new Date(a.date) - new Date(b.date))
       console.log('Upcoming Appointments:', this.upcomingAppointments)
     } catch (error) {
       console.error('Error fetching upcoming appointments:', error)

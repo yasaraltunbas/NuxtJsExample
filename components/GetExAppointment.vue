@@ -55,7 +55,7 @@ export default {
     try {
       const response = await this.$axios.get(`patient/${this.patientId}/appointments`)
       if (response.status === 200) {
-        this.appointments = response.data.sort((a, b) => new Date(a.date) - new Date(b.date))
+        this.appointments = response.data.data.sort((a, b) => new Date(a.date) - new Date(b.date))
       } else {
         console.error('Randevu bilgisi alınamadı.')
       }

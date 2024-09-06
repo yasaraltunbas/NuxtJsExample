@@ -56,7 +56,7 @@ export default {
   async fetch () {
     const response = await this.$axios.get(`/admission/ex-admission/${this.patientId}`)
     if (response.status === 200) {
-      this.pastAdmissions = response.data.sort((a, b) => new Date(a.date) - new Date(b.date))
+      this.pastAdmissions = response.data.data.sort((a, b) => new Date(a.date) - new Date(b.date))
     } else {
       console.error('Yatış bilgisi alınamadı.')
     }

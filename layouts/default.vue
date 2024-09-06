@@ -1,24 +1,13 @@
 <template>
-  <v-container fluid class="default-c">
-    <v-app>
-      <v-row aling="center" justify="center">
-        <v-col cols="12" md="12">
-          <v-container fluid>
-            <v-row>
-              <v-col cols="12">
-                <HeaderComponent />
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12">
-                <FooterComponent />
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-col>
-      </v-row>
-    </v-app>
-  </v-container>
+  <v-app>
+    <HeaderComponent />
+    <v-main app>
+      <v-container class="pt-0 pb-10 pb-md-0 h-100">
+        <nuxt />
+      </v-container>
+    </v-main>
+    <FooterComponent />
+  </v-app>
 </template>
 
 <script>
@@ -37,4 +26,5 @@ export default {
   padding: 0 ;
   margin: 0 ;
 }
+
 </style>

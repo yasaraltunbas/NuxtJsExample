@@ -48,7 +48,7 @@ export default {
   async fetch () {
     try {
       const admissionsResponse = await this.$axios.get('/doctor/admissions')
-      this.admissions = admissionsResponse.data.sort((a, b) => new Date(b.date) - new Date(a.date))
+      this.admissions = admissionsResponse.data.data.sort((a, b) => new Date(b.date) - new Date(a.date))
     } catch (error) {
       console.error('Error fetching patients:', error)
     }

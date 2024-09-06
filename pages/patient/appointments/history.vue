@@ -48,7 +48,7 @@ export default {
   async fetch () {
     try {
       const response = await this.$axios.get('/patient/exappointment')
-      this.appointments = response.data.sort((a, b) => new Date(a.date) - new Date(b.date))
+      this.appointments = response.data.data.sort((a, b) => new Date(a.date) - new Date(b.date))
       console.log('Appointments:', this.appointments)
     } catch (error) {
       console.error('Error fetching appointments:', error)

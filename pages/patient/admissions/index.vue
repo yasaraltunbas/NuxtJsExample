@@ -41,7 +41,7 @@ export default {
   async fetch () {
     try {
       const admissionsResponse = await this.$axios.get('/patient/admissions')
-      this.admissions = admissionsResponse.data.sort((a, b) => new Date(b.date) - new Date(a.date))
+      this.admissions = admissionsResponse.data.data.sort((a, b) => new Date(b.date) - new Date(a.date))
     } catch (error) {
       console.error('Veriler alınırken hata oluştu:', error)
     }

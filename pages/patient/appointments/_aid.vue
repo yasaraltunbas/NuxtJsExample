@@ -62,8 +62,8 @@ export default {
         this.$axios.get(`/appointment/detail/${appointmentId}`)
       ])
 
-      this.medicalRecords = medicalRecordsResponse.data || []
-      this.appointment = appointmentDetailsResponse.data
+      this.medicalRecords = medicalRecordsResponse.data.data || []
+      this.appointment = appointmentDetailsResponse.data.data
     } catch (error) {
     }
   }

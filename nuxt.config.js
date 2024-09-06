@@ -86,6 +86,11 @@ export default {
     middleware: ['auth']
 
   },
+  loading: {
+    color: 'purple',
+    height: '10px',
+    throttle: 0
+  },
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {

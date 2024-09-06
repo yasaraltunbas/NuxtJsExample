@@ -168,7 +168,7 @@ export default {
   async fetch () {
     try {
       const response = await this.$axios.get('/auth/user')
-      this.form = response.data
+      this.form = response.data.data
     } catch (error) {
       console.error('Profile yüklenirken hata oluştu:', error)
     }
