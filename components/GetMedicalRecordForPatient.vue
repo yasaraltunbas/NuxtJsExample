@@ -19,7 +19,6 @@
               </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
-          <v-divider v-if="index < medicalRecords.length - 1" :key="index" />
         </v-list>
       </v-col>
     </v-row>
@@ -30,7 +29,7 @@
 export default {
   props: {
     appointmentId: {
-      type: String,
+      type: [String, Number],
       required: true
     }
   },
