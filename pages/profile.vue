@@ -125,6 +125,7 @@
           <v-btn color="primary" @click="confirmUpdate">
             Güncelle
           </v-btn>
+          <back-button-for-detail />
         </v-col>
       </v-row>
     </v-form>
@@ -132,7 +133,12 @@
 </template>
 
 <script>
+import BackButtonForDetail from '~/components/BackButtonForDetail.vue'
+
 export default {
+  components: {
+    BackButtonForDetail
+  },
   data () {
     return {
       form: {

@@ -30,7 +30,6 @@
           <v-btn icon @click.stop="drawer = !drawer">
             <v-icon>mdi-menu</v-icon>
           </v-btn>
-          <!-- Make the navigation drawer extend to the bottom -->
           <v-navigation-drawer v-model="drawer" app absolute>
             <v-list>
               <v-list-item v-for="(menuItem, $index) in menuItems" :key="$index" :to="menuItem.to">
