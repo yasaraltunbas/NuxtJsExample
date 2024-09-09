@@ -80,7 +80,7 @@ export default {
     try {
       const response = await this.$axios.get(`/appointment/detail/${appointmentId}`)
       if (response.status === 200) {
-        this.appointment = response.data
+        this.appointment = response.data.data
       } else {
         console.error('Randevu bilgisi alınamadı.')
       }

@@ -99,7 +99,7 @@ export default {
   async fetch () {
     try {
       const response = await this.$axios.get(`/departments/${this.appointment.departmentId}/doctors`)
-      this.doctors = response.data.map(doctor => ({
+      this.doctors = response.data.data.map(doctor => ({
         ...doctor,
         fullName: `${doctor.firstName} ${doctor.lastName}`
       }))

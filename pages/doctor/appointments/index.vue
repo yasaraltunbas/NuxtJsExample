@@ -25,10 +25,10 @@ export default {
   async fetch () {
     try {
       const userRoleResponse = await this.$axios.get('/auth/user')
-      this.role = userRoleResponse.data.role
+      this.role = userRoleResponse.data.data.role
 
       const userAppointmentsResponse = await this.$axios.get('/doctor/appointments')
-      this.userAppointments = userAppointmentsResponse.data.sort((a, b) => new Date(a.date) - new Date(b.date))
+      this.userAppointments = userAppointmentsResponse.data.data.sort((a, b) => new Date(a.date) - new Date(b.date))
     } catch (error) {
       console.error('Error fetching data:', error)
     }

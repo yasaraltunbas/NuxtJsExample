@@ -7,36 +7,19 @@
     </v-row>
     <v-row v-if="pastAdmissions.length">
       <v-col cols="12">
-        <v-simple-table class="ex-table">
-          <thead>
-            <tr>
-              <th class="text-left">
-                Hasta Adı
-              </th>
-              <th class="text-left">
-                Tarih
-              </th>
-              <th class="text-left">
-                Bölüm
-              </th>
-              <th class="text-left">
-                Durum
-              </th>
-              <th class="text-left">
-                Şikayet
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="admission in pastAdmissions" :key="admission.id">
-              <td>{{ admission.patientName }}</td>
-              <td>{{ admission.date | formatDate }}</td>
-              <td>{{ admission.departmentName }}</td>
-              <td>{{ admission.status | formatAdmissionStatus }}</td>
-              <td>{{ admission.reason }}</td>
-            </tr>
-          </tbody>
-        </v-simple-table>
+        <v-data-table
+          :headers="headers"
+          :items="pastAdmissions"
+          :items-per-page="5"
+          class="elevation-1"
+        >
+          <template #item.date="{ item }">
+            {{ item.date | formatDate }}
+          </template>
+          <template #item.status="{ item }">
+            {{ item.status | formatAdmissionStatus }}
+          </template>
+        </v-data-table>
       </v-col>
     </v-row>
     <v-row v-else>
@@ -59,26 +42,34 @@ export default {
   },
   data () {
     return {
-      pastAdmissions: []
+      pastAdmissions: [],
+      headers: [
+        { text: 'Hasta Adı', value: 'patientName', align: 'start' },
+        { text: 'Tarih', value: 'date' },
+        { text: 'Bölüm', value: 'departmentName' },
+        { text: 'Durum', value: 'status' },
+        { text: 'Şikayet', value: 'reason' }
+      ]
     }
   },
 
   async fetch () {
     const response = await this.$axios.get(`/admission/ex-admission/${this.patientId}`)
     if (response.status === 200) {
-      this.pastAdmissions = response.data.sort((a, b) => new Date(a.date) - new Date(b.date))
+      this.pastAdmissions = response.data.data.sort((a, b) => new Date(a.date) - new Date(b.date))
     } else {
       console.error('Yatış bilgisi alınamadı.')
     }
   }
-
 }
 </script>
 
-  <style scoped>
-  .v-container {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  </style>
+<style scoped>
+.v-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.elevation-1 {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+</style>

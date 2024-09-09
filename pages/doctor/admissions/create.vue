@@ -49,14 +49,15 @@ export default {
     BackButtonForDetail
   },
   data () {
-    const { doctorId, departmentId, patientId } = this.$route.query
+    const { doctorId, departmentId, patientId, appointmentId } = this.$route.query
     return {
       admission: {
         doctorId,
         departmentId,
         patientId,
         reason: '',
-        dischargeDate: ''
+        dischargeDate: '',
+        appointmentId
       },
       formValid: false,
       menu: false
@@ -68,7 +69,7 @@ export default {
       this.$axios.post('/admission/create', this.admission)
         .then((response) => {
           console.log('Admission added:', response.data)
-          this.$router.push({ path: '/doctor/appointments/_aid' })
+          this.$router.push(`/doctor/appointments/${this.admission.appointmentId}`)
         })
         .catch((error) => {
           console.error('Error adding admission:', error)
