@@ -53,7 +53,7 @@ export default {
 
   async fetch () {
     try {
-      const response = await this.$axios.get(`patient/${this.patientId}/exmedicalrecord`)
+      const response = await this.$axios.get(`/api/patient/${this.patientId}/exmedicalrecord`)
       if (response.status === 200) {
         this.medicalRecords = response.data.data
       } else {

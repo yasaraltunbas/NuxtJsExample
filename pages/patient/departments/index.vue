@@ -33,7 +33,7 @@ export default {
   },
   async fetch () {
     try {
-      const response = await this.$axios.$get('/departments/all')
+      const response = await this.$axios.$get('/api/departments/all')
       this.departments = response.data
     } catch (error) {
       console.error('Error fetching departments:', error)

@@ -173,7 +173,7 @@ export default {
   },
   async fetch () {
     try {
-      const response = await this.$axios.get('/auth/user')
+      const response = await this.$axios.get('/api/auth/user')
       this.form = response.data.data
     } catch (error) {
       console.error('Profile yüklenirken hata oluştu:', error)
@@ -182,7 +182,7 @@ export default {
   methods: {
     async updateProfile () {
       try {
-        await this.$axios.put('/auth/UpdateUser', this.form)
+        await this.$axios.put('/api/auth/UpdateUser', this.form)
         alert('Profil başarıyla güncellendi')
         this.profileUpdated = true
       } catch (error) {
@@ -193,7 +193,7 @@ export default {
       const confirmDelete = confirm('Profilinizi silmek istediğinizden emin misiniz?')
       if (confirmDelete) {
         try {
-          await this.$axios.delete('/auth/DeleteMe')
+          await this.$axios.delete('/api/auth/DeleteMe')
           alert('Profile deleted successfully')
           this.$auth.logout()
             .then(() => {

@@ -98,7 +98,7 @@ export default {
 
   async fetch () {
     try {
-      const response = await this.$axios.get(`/departments/${this.appointment.departmentId}/doctors`)
+      const response = await this.$axios.get(`/api/departments/${this.appointment.departmentId}/doctors`)
       this.doctors = response.data.data.map(doctor => ({
         ...doctor,
         fullName: `${doctor.firstName} ${doctor.lastName}`
@@ -115,7 +115,7 @@ export default {
       }
 
       try {
-        const response = await this.$axios.post('/appointment/create', this.appointment)
+        const response = await this.$axios.post('/api/appointment/create', this.appointment)
         console.log('Appointment created:', response.data)
 
         this.message = 'Randevu başarıyla oluşturuldu!'

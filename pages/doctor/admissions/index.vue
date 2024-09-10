@@ -47,7 +47,7 @@ export default {
 
   async fetch () {
     try {
-      const admissionsResponse = await this.$axios.get('/doctor/admissions')
+      const admissionsResponse = await this.$axios.get('/api/doctor/admissions')
       this.admissions = admissionsResponse.data.data.sort((a, b) => new Date(b.date) - new Date(a.date))
     } catch (error) {
       console.error('Error fetching patients:', error)
@@ -56,7 +56,7 @@ export default {
   methods: {
     async dischargePatient (admissionId) {
       try {
-        await this.$axios.delete(`/admission/discharge/${admissionId}`)
+        await this.$axios.delete(`/api/admission/discharge/${admissionId}`)
         this.admissions = this.admissions.filter(admission => admission.id !== admissionId)
       } catch (error) {
         console.error('Error discharging patient:', error)

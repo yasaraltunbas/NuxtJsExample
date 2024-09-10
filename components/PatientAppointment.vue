@@ -90,7 +90,7 @@ export default {
     confirmDelete () {
       this.deleteDialog = false
       if (this.appointmentToDelete) {
-        this.$axios.delete(`/appointment/DeleteAppointment/${this.appointmentToDelete.id}`)
+        this.$axios.delete(`/api/appointment/DeleteAppointment/${this.appointmentToDelete.id}`)
           .then(() => {
             console.log('Randevu başarıyla iptal edildi')
             this.$emit('appointmentDeleted', this.appointmentToDelete.id)

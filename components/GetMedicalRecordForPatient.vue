@@ -44,7 +44,7 @@ export default {
   methods: {
     async fetchMedicalRecords () {
       try {
-        const response = await this.$axios.get(`/medicalrecord/appointment/${this.appointmentId}`)
+        const response = await this.$axios.get(`/api/medicalrecord/appointment/${this.appointmentId}`)
         this.medicalRecords = response.data.data
       } catch (error) {
         console.error('Error fetching medical records:', error)

@@ -78,7 +78,7 @@ export default {
   async fetch () {
     const appointmentId = this.$route.params.aid
     try {
-      const response = await this.$axios.get(`/appointment/detail/${appointmentId}`)
+      const response = await this.$axios.get(`/api/appointment/detail/${appointmentId}`)
       if (response.status === 200) {
         this.appointment = response.data.data
       } else {

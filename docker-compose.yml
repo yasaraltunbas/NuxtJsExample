@@ -1,0 +1,23 @@
+services:
+  backend:
+    image: hospital-management:0.7
+    networks:
+      - my_network
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Server=host.docker.internal;Port=5432;User Id=mosstar;Password=mosstar123;Database=hospitaldb
+    
+  frontend:
+    image: vuetifyexample-app:0.6
+    container_name: vuetifyexample-app
+    networks:
+      - my_network
+    ports:
+      - "3000:3000"
+    environment:
+       BACKEND_URL: http://backend:8080
+
+
+networks:
+  my_network:
+    driver: bridge

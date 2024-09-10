@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     submitAdmission () {
-      this.$axios.post('/admission/create', this.admission)
+      this.$axios.post('/api/admission/create', this.admission)
         .then((response) => {
           console.log('Admission added:', response.data)
           this.$router.push(`/doctor/appointments/${this.admission.appointmentId}`)

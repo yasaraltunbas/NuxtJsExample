@@ -1,6 +1,11 @@
 import colors from 'vuetify/es5/util/colors'
+require('dotenv').config()
 
 export default {
+  server: {
+    port: 3000,
+    host: '0.0.0.0'
+  },
   head: {
     titleTemplate: '%s - VuetifyExample',
     title: 'VuetifyExample',
@@ -37,10 +42,19 @@ export default {
     '@nuxtjs/auth-next'
 
   ],
-
   axios: {
-    baseURL: 'http://localhost:5114/api'
+    proxy: true,
+    headers: {
+      common: {
+        'Content-Type': 'application/json'
+      }
+    }
   },
+
+  proxy: {
+    '/api/': process.env.BACKEND_URL || 'http://localhost:8080'
+  },
+
   build: {
     extend (config, { isDev, isClient }) {
       if (isClient) {
@@ -68,9 +82,9 @@ export default {
       local: {
         schema: 'local',
         endpoints: {
-          login: { url: '/auth/login', method: 'post' },
+          login: { url: '/api/auth/login', method: 'post' },
           logout: false,
-          user: { url: '/auth/user', method: 'get' }
+          user: { url: '/api/auth/user', method: 'get' }
         },
         token: {
           property: 'data'

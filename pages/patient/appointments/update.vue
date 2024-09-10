@@ -88,7 +88,7 @@ export default {
   },
   async fetch () {
     try {
-      const response = await this.$axios.get(`/appointment/${this.$route.query.appointmentId}`)
+      const response = await this.$axios.get(`/api/appointment/${this.$route.query.appointmentId}`)
       const appointmentData = response.data.data
       this.appointment.date = appointmentData.date.split('T')[0]
       this.appointment.reason = appointmentData.reason
@@ -108,7 +108,7 @@ export default {
     async confirmUpdate () {
       this.showDialog = false
       try {
-        const response = await this.$axios.put(`/appointment/AppointmentUpdate/${this.$route.query.appointmentId}`, this.appointment)
+        const response = await this.$axios.put(`/api/appointment/AppointmentUpdate/${this.$route.query.appointmentId}`, this.appointment)
         console.log('Appointment updated:', response.data)
 
         this.message = 'Randevu başarıyla güncellendi!'

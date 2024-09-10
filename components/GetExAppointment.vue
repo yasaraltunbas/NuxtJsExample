@@ -53,7 +53,7 @@ export default {
   },
   async fetch () {
     try {
-      const response = await this.$axios.get(`patient/${this.patientId}/appointments`)
+      const response = await this.$axios.get(`/api/patient/${this.patientId}/appointments`)
       if (response.status === 200) {
         this.appointments = response.data.data.sort((a, b) => new Date(a.date) - new Date(b.date))
       } else {

@@ -58,8 +58,8 @@ export default {
 
     try {
       const [medicalRecordsResponse, appointmentDetailsResponse] = await Promise.all([
-        this.$axios.get(`/medicalrecord/appointment/${appointmentId}`),
-        this.$axios.get(`/appointment/detail/${appointmentId}`)
+        this.$axios.get(`/api/medicalrecord/appointment/${appointmentId}`),
+        this.$axios.get(`/api/appointment/detail/${appointmentId}`)
       ])
 
       this.medicalRecords = medicalRecordsResponse.data.data || []

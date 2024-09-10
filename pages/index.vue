@@ -25,7 +25,7 @@ export default {
 
   async fetch () {
     try {
-      const userRoleResponse = await this.$axios.get('/auth/user')
+      const userRoleResponse = await this.$axios.get('/api/auth/user')
       this.role = userRoleResponse.data.data.role
     } catch (error) {
       console.error('Veriler alınırken hata oluştu:', error)
